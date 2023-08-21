@@ -22,6 +22,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { removePriceList } from '../store/priceSlice';
 
 interface Data {
     id: number,
@@ -207,10 +208,13 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
+  deleteHandler: () => void;
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-  const { numSelected } = props;
+  const { numSelected, deleteHandler } = props;
+  const dispatch = useDispatch()
+
 
   return (
     <Toolbar
@@ -244,7 +248,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton onClick={()=>console.log('elo')}>
+          <IconButton onClick={deleteHandler}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -269,21 +273,10 @@ export default function EnhancedTable() {
     const dispatch = useDispatch()
     const {priceTable} = useSelector((state: any) => state.priceList)
   
-//     const rows = [
-//     createData('Cupcake', 305, 3.7, 67, 4.3),
-//     createData('Donut', 452, 25.0, 51, 4.9),
-//     createData('Eclair', 262, 16.0, 24, 6.0),
-//     createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//     createData('Gingerbread', 356, 16.0, 49, 3.9),
-//     createData('Honeycomb', 408, 3.2, 87, 6.5),
-//     createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//     createData('Jelly Bean', 375, 0.0, 94, 0.0),
-//     createData('KitKat', 518, 26.0, 65, 7.0),
-//     createData('Lollipop', 392, 0.2, 98, 0.0),
-//     createData('Marshmallow', 318, 0, 81, 2.0),
-//     createData('Nougat', 360, 19.0, 9, 37.0),
-//     createData('Oreo', 437, 18.0, 63, 4.0),
-//   ];
+  //   const rows = [
+  //   createData(305,'Cupcake', 3.7, 67, 4.3,5,5,5),
+  //   createData( 452,'Donut', 25.0, 51, 4.9,5,5,5),
+  // ];
     
     const rows: Data[] = []
   
@@ -358,10 +351,18 @@ export default function EnhancedTable() {
     [order, orderBy, page, rowsPerPage],
   );
 
+  const deleteHandler = () => {
+    console.log(selected)
+    setSelected([]);
+  }
+
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar 
+        numSelected={selected.length}
+        deleteHandler={deleteHandler}
+        />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
