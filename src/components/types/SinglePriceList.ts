@@ -1,0 +1,13 @@
+export interface SinglePriceList {
+    id: number;
+    title: string;
+    weight: number;
+    height: number;
+    width: number;
+    depth: number;
+    quantity: number;
+}
+
+export interface SinglePriceListArea extends SinglePriceList {
+    area: number
+}

@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
+import {increment, decrement} from './store/counterSlice'
+import ProudctList from './components/productList';
+import PriceList from './components/priceList';
+import MatchArea from './components/MatchArea';
+import EnhancedTable from './components/TableWithPriceList';
+import CSVReader from './components/LoadProductsFromCsv';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const dispatch = useDispatch();
+    const counter = useSelector((state:any) => state.counter.value);
+   
+    const handleIncrement = () => {
+      dispatch(increment());
+    };
+
+    useEffect(()=> {
+      // console.log(counter.value)
+    }, [counter])
+
+    return (
+      <div className="App">
+        {/* <p>stan: {counter}</p>
+        <button onClick={handleIncrement}>Increment</button>
+        <button onClick={()=>dispatch(decrement())}></button> */}
+        <CSVReader />
+        <ProudctList />
+        <PriceList />
+        <EnhancedTable />
+        <MatchArea />
+      </div>
+    );
 }
 
 export default App;
