@@ -6,6 +6,7 @@ import fetchProduct from "../functions/fetchProducts";
 import { Product } from "./types/Product";
 import Box from '@mui/material/Box';
 // mui
+import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -124,10 +125,10 @@ const ProudctList = () => {
 
 
     return (
+      <Container maxWidth="xl" sx={{margin: '2rem auto'}}>
       <Box
         sx={{
           width: '100%',
-          height: 500,
         }}
       >
         <Paper sx={{ width: '100%', overflow: 'hidden', }}>
@@ -179,6 +180,7 @@ const ProudctList = () => {
         />
       </Paper>
       </Box>
+      </Container>
     );
 }
 

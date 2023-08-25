@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { alpha } from '@mui/material/styles';
+import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -23,6 +24,7 @@ import { visuallyHidden } from '@mui/utils';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { removePriceList } from '../store/priceSlice';
+import { addSyntheticLeadingComment } from 'typescript';
 
 interface Data {
     id: number,
@@ -243,7 +245,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           id="tableTitle"
           component="div"
         >
-          Lista cenników
+          Pricelists:
         </Typography>
       )}
       {numSelected > 0 ? (
@@ -264,26 +266,40 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 }
 
 export default function EnhancedTable() {
-    const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof Data>('width');
-    const [selected, setSelected] = React.useState<readonly string[]>([]);
-    const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const dispatch = useDispatch()
-    const {priceTable} = useSelector((state: any) => state.priceList)
+  const [order, setOrder] = React.useState<Order>('asc');
+  const [orderBy, setOrderBy] = React.useState<keyof Data>('width');
+  const [selected, setSelected] = React.useState<readonly number[]>([]); // Zmieniony typ na number[]
+  const [page, setPage] = React.useState(0);
+  const [dense, setDense] = React.useState(false);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const dispatch = useDispatch();
+  const { priceTable } = useSelector((state: any) => state.priceList);
+  const [rows, setRows] = React.useState<Data[]>([])
   
-  //   const rows = [
+    React.useEffect(()=> {
+      const mappedRows = priceTable.map((price: Data)=> ({
+        id: price.id,
+        title: price.title,
+        area: price.area,
+        width: price.width,
+        depth: price.depth,
+        height: price.height,
+        weight: price.weight,
+        quantity: price.quantity,
+      }));
+
+      setRows(mappedRows); 
+    }, [priceTable])
+
+    // const rowsMaking = priceTable.forEach((price: any) => {
+    //     // console.log(product.title)
+    //     rows.push(createData(price.id, price.title, price.area, price.width, price.depth, price.height, price.weight, price.quantity))
+    // })
+    // const rows: Data[] = []
+      //   const rows = [
   //   createData(305,'Cupcake', 3.7, 67, 4.3,5,5,5),
   //   createData( 452,'Donut', 25.0, 51, 4.9,5,5,5),
   // ];
-    
-    const rows: Data[] = []
-  
-    const rowsMaking = priceTable.forEach((price: any) => {
-        // console.log(product.title)
-        rows.push(createData(price.id, price.title, price.area, price.width, price.depth, price.height, price.weight, price.quantity))
-    })
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -296,19 +312,19 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.title);
+      const newSelected = rows.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, title: string) => {
-    const selectedIndex = selected.indexOf(title);
-    let newSelected: readonly string[] = [];
+  const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
+    const selectedIndex = selected.indexOf(id);
+    let newSelected: readonly number[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, title);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -336,7 +352,7 @@ export default function EnhancedTable() {
     setDense(event.target.checked);
   };
 
-  const isSelected = (title: string) => selected.indexOf(title) !== -1;
+  const isSelected = (id: number) => selected.indexOf(id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -353,10 +369,12 @@ export default function EnhancedTable() {
 
   const deleteHandler = () => {
     console.log(selected)
-    setSelected([]);
+    const newArr = [...selected]
+    dispatch(removePriceList(newArr))
   }
 
   return (
+    <Container maxWidth="xl" sx={{margin: '2rem auto'}}>
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar 
@@ -379,13 +397,13 @@ export default function EnhancedTable() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.title);
+                const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.title)}
+                    onClick={(event) => handleClick(event, row.id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -447,5 +465,6 @@ export default function EnhancedTable() {
         label="Dense padding"
       />
     </Box>
+    </Container>
   );
 }

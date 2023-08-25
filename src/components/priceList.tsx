@@ -8,7 +8,14 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import {removePriceList} from "../store/priceSlice"
-
+// mui
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
 
 const PriceList = () => {
     const dispatch = useDispatch()
@@ -94,47 +101,46 @@ const PriceList = () => {
     }
 
     return (
-        <>
-        <form onSubmit={addNewPrice}> 
-        <h2>Utwórz nowy cennik:</h2>
-            <input id="title" onChange={inputHandler} type="text" placeholder="nazwa"></input>
-            <input id="weight" onChange={inputHandler} type="number" placeholder="maks waga" />
-            <input id="height" onChange={inputHandler} type="number" placeholder="wysokosc" />
-            <input id="width" onChange={inputHandler} type="number" placeholder="szerokosc" />
-            <input id="depth" onChange={inputHandler} type="number" placeholder="głębokość" />
-            <input id="quantity" onChange={inputHandler} type="text" placeholder="Ilość elementów w paczce" />
-            <button type="submit">KLIKC</button>
-        </form>
-        {/* {priceTable.length > 0 ? 
-            <section className="pricelist-container table">
-                {priceTable.map((el:SinglePriceList)=> (
-                    <Table className="price-single">
-                        <div>{el.title}</div>
-                        <div>{el.weight}</div>
-                        <div>{el.height}</div>
-                        <div>{el.width}</div>
-                        <div>{el.depth}</div>
-                        <div>{el.quantity}</div>
-                        <button onClick={()=>dispatch(removePriceList(el.id))}>
-                            <FontAwesomeIcon icon={faTrashAlt}/>
-                        </button>
-                    </Table>
-                ))}
-            </section>  
-        :<p>No pricelist added</p>
-        } */}
-        </>
+        <React.Fragment>
+            <CssBaseline />
+            <Container maxWidth="xl" sx={{margin: '2rem auto'}}>
+                <Box sx={{ 
+                    // maxHeight: '250px',
+                }} >
+                <Paper sx={{ 
+                    height: '100%',
+                    margin: 'auto',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center'
+                    }} >
+                    <Box
+                        component="form"
+                        sx={{
+                            '& .MuiTextField-root': { m: 1, width: '25ch' },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                        onSubmit={addNewPrice}
+                    > 
+                    <h2>Crate new pricelist:</h2>
+                        <div>
+                        <TextField required id="title" label="Title" variant="filled" onChange={inputHandler} type="text" placeholder="nazwa" />
+                        <TextField required id="weight" label="weight" variant="filled" onChange={inputHandler} type="number" placeholder="maks waga" />
+                        <TextField required id="height" label="height" variant="filled" onChange={inputHandler} type="number" placeholder="wysokosc" />
+                        <TextField required id="width" label="width" variant="filled" onChange={inputHandler} type="number" placeholder="szerokosc" />
+                        <TextField required id="depth" label="depth" variant="filled" onChange={inputHandler} type="number" placeholder="głębokość" />
+                        <TextField required id="quantity" label="quantity" variant="filled" onChange={inputHandler} type="text" placeholder="Ilość elementów w paczce" />
+                        </div>
+                        <Button sx={{margin: '1rem'}} type="submit" variant="contained" endIcon={<SendIcon />}>
+                            Add pricelist
+                        </Button>
+                    </Box>
+                </Paper>
+                </Box>
+            </Container>
+        </React.Fragment>
     )
 }
 
 export default PriceList
-
-
-const Table = styled.section`
-  font-size: 1.25rem;
-  text-align: center;
-  display: grid;
-  grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr .5fr;
-  padding: 1rem;
-  place-content: center;
-`;

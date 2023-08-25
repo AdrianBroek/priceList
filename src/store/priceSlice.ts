@@ -20,8 +20,10 @@ const priceListSlice = createSlice({
                 ...action.payload,
             ]
         },
-        removePriceList: (state, action: PayloadAction<number>) => {
-            state.priceTable = state.priceTable.filter(item => item.id != action.payload);
+        removePriceList: (state, action: PayloadAction<number[]>) => {
+            const idToDelete = action.payload
+            state.priceTable = state.priceTable.filter(item => !idToDelete.includes(item.id))
+            // state.priceTable = state.priceTable.filter(item => item.id != action.payload);
         }
     }
 })
