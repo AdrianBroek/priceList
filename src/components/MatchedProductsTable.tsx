@@ -1,32 +1,42 @@
-import React, {useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 // types
 import {ProductsWithPriceList} from './types/ProductsWithPrice'
+import { SinglePriceListArea } from "./types/SinglePriceList";
 
 interface TableHeadColumns {
-    id: 'title' | 'id' | 'weight' | 'width' | 'height' | 'depth' | 'PriceListId'
+    id: 'title' | 'id' | 'weight' | 'width' | 'height' | 'depth' | 'priceListId'
     label: string,
+    sorted: boolean
 }
 
 const TableHeadColumn: TableHeadColumns[] = [
-    {id: 'id', label: 'sku'},
-    {id: 'title', label: 'name'},
-    {id: 'width', label: 'width'},
-    {id: 'height', label: 'height'},
-    {id: 'weight', label: 'weight'},
-    {id: 'depth', label: 'depth'},
-    {id: 'PriceListId', label: 'Pricelist ID'},
+    {id: 'id', label: 'sku', sorted: false},
+    {id: 'title', label: 'name', sorted: false},
+    {id: 'width', label: 'width',sorted: false},
+    {id: 'height', label: 'height',sorted: false},
+    {id: 'weight', label: 'weight',sorted: false},
+    {id: 'depth', label: 'depth',sorted: false},
+    {id: 'priceListId', label: 'Pricelist ID',sorted: false},
 ]
 
-export const TableHeadComponent = () => {
+type Sort = {
+    sort: (
+        id:'id' | 'title' | 'weight' | 'width' |
+         'height' | 'depth' | 'priceListId',
+        sorted: boolean) => void;
+}
+
+export const TableHeadComponent = ({sort}: Sort) => {
     const [tableHead, setTableHead] = useState(TableHeadColumn)
+    
     return (
         <TableHead>
             {tableHead && (
                 <>
                     {tableHead.map((column) => (
-                        <div key={column.id}>
+                        <div onClick={()=>sort(column.id, column.sorted)} key={column.id}>
                             {column.label}
                         </div>
                     ))}
@@ -39,15 +49,41 @@ export const TableHeadComponent = () => {
 const MatchedProductsTable = () => {
 
     const productsWithPrice = useSelector((state:any) => state.productsWithPrice)
-    
+    const [rows, setRows] = useState<ProductsWithPriceList[]>([])
 
-    console.log(TableHeadColumn)
+    function sort(id: 'id' | 'title' | 'weight' | 'width' | 'height' | 'depth' | 'priceListId', sorted:boolean) {
+        console.log(sorted)
+        const newArr = [...rows];
+        newArr.sort((a: ProductsWithPriceList, b: ProductsWithPriceList) => {
+          const aValue = a[id];
+          const bValue = b[id];
+      
+          if (typeof aValue === 'string' && typeof bValue === 'string') {
+            // console.log(aValue)
+            return aValue.localeCompare(bValue);
+          } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+            // console.log(bValue)
+            return aValue - bValue;
+          } else {
+            return 0; // Nie można porównać, zwracamy 0
+          }
+        });
+      
+        setRows(newArr);
+      }
+      
+
+    useEffect(()=> {
+        setRows(productsWithPrice) 
+        console.log('robi sie')
+    },[productsWithPrice])
+
     return (
         <section>
-            {productsWithPrice && ( 
+            {rows && ( 
                 <Matchedtable>
-                    <TableHeadComponent />
-                    {productsWithPrice.map((product:ProductsWithPriceList) => (
+                    <TableHeadComponent sort={sort} />
+                    {rows.map((product:ProductsWithPriceList) => (
                         <>
                             <Table>
                                 <TableRow>{product.id}</TableRow>
