@@ -11,15 +11,16 @@ interface TableHeadColumns {
     sorted: boolean
 }
 
-const TableHeadColumn: TableHeadColumns[] = [
-    {id: 'id', label: 'sku', sorted: false},
-    {id: 'title', label: 'name', sorted: false},
-    {id: 'width', label: 'width',sorted: false},
-    {id: 'height', label: 'height',sorted: false},
-    {id: 'weight', label: 'weight',sorted: false},
-    {id: 'depth', label: 'depth',sorted: false},
-    {id: 'priceListId', label: 'Pricelist ID',sorted: false},
-]
+
+// const TableHeadColumn: TableHeadColumns[] = [
+//     {id: 'id', label: 'sku', sorted: false},
+//     {id: 'title', label: 'name', sorted: false},
+//     {id: 'width', label: 'width',sorted: false},
+//     {id: 'height', label: 'height',sorted: false},
+//     {id: 'weight', label: 'weight',sorted: false},
+//     {id: 'depth', label: 'depth',sorted: false},
+//     {id: 'priceListId', label: 'Pricelist ID',sorted: false},
+// ]
 
 type Sort = {
     sort: (
@@ -28,14 +29,17 @@ type Sort = {
         sorted: boolean) => void;
 }
 
-export const TableHeadComponent = ({sort}: Sort) => {
-    const [tableHead, setTableHead] = useState(TableHeadColumn)
+type TableHeadColumn  = {
+    tableHeadColumn: TableHeadColumns[];
+}
+
+export const TableHeadComponent = ({sort, tableHeadColumn}: Sort & TableHeadColumn) => {
     
     return (
         <TableHead>
-            {tableHead && (
+            {tableHeadColumn && (
                 <>
-                    {tableHead.map((column) => (
+                    {tableHeadColumn.map((column) => (
                         <div onClick={()=>sort(column.id, column.sorted)} key={column.id}>
                             {column.label}
                         </div>
@@ -50,39 +54,79 @@ const MatchedProductsTable = () => {
 
     const productsWithPrice = useSelector((state:any) => state.productsWithPrice)
     const [rows, setRows] = useState<ProductsWithPriceList[]>([])
+    const [tableHeadColumn, setTableHeadColumn] = useState<TableHeadColumns[]>([
+        {id: 'id', label: 'sku', sorted: false},
+        {id: 'title', label: 'name', sorted: false},
+        {id: 'width', label: 'width',sorted: false},
+        {id: 'height', label: 'height',sorted: false},
+        {id: 'weight', label: 'weight',sorted: false},
+        {id: 'depth', label: 'depth',sorted: false},
+        {id: 'priceListId', label: 'Pricelist ID',sorted: false},
+    ])
 
     function sort(id: 'id' | 'title' | 'weight' | 'width' | 'height' | 'depth' | 'priceListId', sorted:boolean) {
-        console.log(sorted)
+
+        const sortedChange = (changedId: string) => {
+            const changeSort = tableHeadColumn.map((column)=> {
+                if(column.id === changedId){
+                return { ...column, sorted: !column.sorted}
+                }
+                return column
+            })
+            setTableHeadColumn(changeSort)
+        }
+
         const newArr = [...rows];
-        newArr.sort((a: ProductsWithPriceList, b: ProductsWithPriceList) => {
-          const aValue = a[id];
-          const bValue = b[id];
-      
-          if (typeof aValue === 'string' && typeof bValue === 'string') {
-            // console.log(aValue)
-            return aValue.localeCompare(bValue);
-          } else if (typeof aValue === 'number' && typeof bValue === 'number') {
-            // console.log(bValue)
-            return aValue - bValue;
-          } else {
-            return 0; // Nie można porównać, zwracamy 0
-          }
-        });
-      
+        if(!sorted){
+            newArr.sort((a: ProductsWithPriceList, b: ProductsWithPriceList) => {
+                const aValue = a[id];
+                const bValue = b[id];
+            
+                if (typeof aValue === 'string' && typeof bValue === 'string') {
+                  // console.log(aValue)
+                  return aValue.localeCompare(bValue);
+                } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+                  // console.log(bValue)
+                  return aValue - bValue;
+                } else {
+                  return 0; // Nie można porównać, zwracamy 0
+                }
+            });
+            sortedChange(id)
+        }else {
+            newArr.sort((a: ProductsWithPriceList, b: ProductsWithPriceList) => {
+                const aValue = a[id];
+                const bValue = b[id];
+            
+                if (typeof aValue === 'string' && typeof bValue === 'string') {
+                  // console.log(aValue)
+                  return bValue.localeCompare(aValue);
+                } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+                  // console.log(bValue)
+                  return bValue - aValue;
+                } else {
+                  return 0; // Nie można porównać, zwracamy 0
+                }
+            });
+            sortedChange(id)
+        }
         setRows(newArr);
       }
       
 
     useEffect(()=> {
         setRows(productsWithPrice) 
-        console.log('robi sie')
+        // console.log('robi sie')
     },[productsWithPrice])
 
     return (
         <section>
             {rows && ( 
                 <Matchedtable>
-                    <TableHeadComponent sort={sort} />
+                    <TableHeadComponent 
+                    sort={sort} 
+                    tableHeadColumn={tableHeadColumn} 
+                    />
                     {rows.map((product:ProductsWithPriceList) => (
                         <>
                             <Table>
