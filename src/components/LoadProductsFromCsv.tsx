@@ -51,13 +51,13 @@ const LoadProductsFromCsv = () => {
         } else {
           newObj.depth = 0;
         }
-        console.log(newObj)
+        // console.log(newObj)
         newArray.push(newObj)
 
         // console.log(loadedItems.length)
         // index == loadedItems.length - 1 ? console.log('yes') : console.log('no')
         if(index == loadedItems.length - 1) {
-          console.log(newArray)
+          // console.log(newArray)
           setProdList(newArray)
 
         }
