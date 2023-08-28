@@ -5,8 +5,7 @@ import { useSelector } from "react-redux";
 import {ProductsWithPriceList} from './types/ProductsWithPrice'
 import { SinglePriceListArea } from "./types/SinglePriceList";
 // mui
-import NorthIcon from '@mui/icons-material/North';
-import SouthIcon from '@mui/icons-material/South';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 interface TableHeadColumns {
     id: 'title' | 'id' | 'weight' | 'width' | 'height' | 'depth' | 'priceListId'
@@ -36,7 +35,7 @@ export const TableHeadComponent = ({sort, tableHeadColumn}: Sort & TableHeadColu
                 <>
                     {tableHeadColumn.map((column) => (
                         <div onClick={()=>sort(column.id, column.sorted, column.selected)} key={column.id}>
-                            {column.sorted ? <NorthIcon sx={{ fontSize: 15 }} className={column.selected? 'active' : ""} /> : <SouthIcon sx={{ fontSize: 15 }} className={column.selected? 'active' : ""}/>}
+                            {column.sorted ? <ArrowUpwardIcon sx={{ fontSize: 17 }} className={column.selected? 'active' : ""} /> : <ArrowUpwardIcon sx={{ fontSize: 17, transform: 'rotate(-180deg)' }} className={column.selected? 'active' : ""}/>}
                             <p>{column.label}</p>
                         </div>
                     ))}
@@ -192,7 +191,8 @@ const TableHead = styled.div `
         cursor: pointer;
         svg {
             opacity: 0;
-            transition: .2s ease-in;
+            -webkit-transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,-webkit-transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+            transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
             margin-right: 3px;
             &.active {
                 opacity: 1 !important;
