@@ -4,29 +4,24 @@ import { useSelector } from "react-redux";
 // types
 import {ProductsWithPriceList} from './types/ProductsWithPrice'
 import { SinglePriceListArea } from "./types/SinglePriceList";
+// mui
+import NorthIcon from '@mui/icons-material/North';
+import SouthIcon from '@mui/icons-material/South';
 
 interface TableHeadColumns {
     id: 'title' | 'id' | 'weight' | 'width' | 'height' | 'depth' | 'priceListId'
     label: string,
-    sorted: boolean
+    sorted: boolean,
+    selected: boolean
 }
-
-
-// const TableHeadColumn: TableHeadColumns[] = [
-//     {id: 'id', label: 'sku', sorted: false},
-//     {id: 'title', label: 'name', sorted: false},
-//     {id: 'width', label: 'width',sorted: false},
-//     {id: 'height', label: 'height',sorted: false},
-//     {id: 'weight', label: 'weight',sorted: false},
-//     {id: 'depth', label: 'depth',sorted: false},
-//     {id: 'priceListId', label: 'Pricelist ID',sorted: false},
-// ]
 
 type Sort = {
     sort: (
         id:'id' | 'title' | 'weight' | 'width' |
          'height' | 'depth' | 'priceListId',
-        sorted: boolean) => void;
+        sorted: boolean,
+        selected: boolean
+        ) => void;
 }
 
 type TableHeadColumn  = {
@@ -40,8 +35,9 @@ export const TableHeadComponent = ({sort, tableHeadColumn}: Sort & TableHeadColu
             {tableHeadColumn && (
                 <>
                     {tableHeadColumn.map((column) => (
-                        <div onClick={()=>sort(column.id, column.sorted)} key={column.id}>
-                            {column.label}
+                        <div onClick={()=>sort(column.id, column.sorted, column.selected)} key={column.id}>
+                            {column.sorted ? <NorthIcon sx={{ fontSize: 15 }} className={column.selected? 'active' : ""} /> : <SouthIcon sx={{ fontSize: 15 }} className={column.selected? 'active' : ""}/>}
+                            <p>{column.label}</p>
                         </div>
                     ))}
                 </>
@@ -55,23 +51,24 @@ const MatchedProductsTable = () => {
     const productsWithPrice = useSelector((state:any) => state.productsWithPrice)
     const [rows, setRows] = useState<ProductsWithPriceList[]>([])
     const [tableHeadColumn, setTableHeadColumn] = useState<TableHeadColumns[]>([
-        {id: 'id', label: 'sku', sorted: false},
-        {id: 'title', label: 'name', sorted: false},
-        {id: 'width', label: 'width',sorted: false},
-        {id: 'height', label: 'height',sorted: false},
-        {id: 'weight', label: 'weight',sorted: false},
-        {id: 'depth', label: 'depth',sorted: false},
-        {id: 'priceListId', label: 'Pricelist ID',sorted: false},
+        {id: 'id', label: 'sku', sorted: false, selected: false},
+        {id: 'title', label: 'name', sorted: false, selected: false},
+        {id: 'width', label: 'width',sorted: false, selected: false},
+        {id: 'height', label: 'height',sorted: false, selected: false},
+        {id: 'weight', label: 'weight',sorted: false, selected: false},
+        {id: 'depth', label: 'depth',sorted: false, selected: false},
+        {id: 'priceListId', label: 'Pricelist ID',sorted: false, selected: false},
     ])
 
-    function sort(id: 'id' | 'title' | 'weight' | 'width' | 'height' | 'depth' | 'priceListId', sorted:boolean) {
+    function sort(id: 'id' | 'title' | 'weight' | 'width' | 'height' | 'depth' | 'priceListId', sorted:boolean, selected: boolean) {
 
         const sortedChange = (changedId: string) => {
             const changeSort = tableHeadColumn.map((column)=> {
                 if(column.id === changedId){
-                return { ...column, sorted: !column.sorted}
+                    return { ...column, sorted: !column.sorted, selected: true}
+                }else {
+                    return { ...column, sorted: false, selected: false}
                 }
-                return column
             })
             setTableHeadColumn(changeSort)
         }
@@ -93,6 +90,7 @@ const MatchedProductsTable = () => {
                 }
             });
             sortedChange(id)
+            
         }else {
             newArr.sort((a: ProductsWithPriceList, b: ProductsWithPriceList) => {
                 const aValue = a[id];
@@ -108,6 +106,7 @@ const MatchedProductsTable = () => {
                   return 0; // Nie można porównać, zwracamy 0
                 }
             });
+            // selectedChange(id)
             sortedChange(id)
         }
         setRows(newArr);
@@ -116,12 +115,11 @@ const MatchedProductsTable = () => {
 
     useEffect(()=> {
         setRows(productsWithPrice) 
-        // console.log('robi sie')
     },[productsWithPrice])
 
     return (
-        <section>
-            {rows && ( 
+        <Container>
+            {rows.length > 0 && ( 
                 <Matchedtable>
                     <TableHeadComponent 
                     sort={sort} 
@@ -143,11 +141,15 @@ const MatchedProductsTable = () => {
                 </Matchedtable>
                 )}
 
-        </section>
+        </Container>
     )
 }
 
 export default MatchedProductsTable
+
+const Container = styled.section`
+    overflow-x: auto;
+`
 
 const Matchedtable = styled.section`
     box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
@@ -155,6 +157,7 @@ const Matchedtable = styled.section`
     border-radius: 4px;
     background-color: #121212;
     padding: 1rem 0;
+    min-width: 730px;
 `
 
 const Table = styled.div `
@@ -181,4 +184,25 @@ const TableHead = styled.div `
     line-height: 1.5rem;
     padding: 0 0 1rem;
     font-weight: 500;
+    div {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        svg {
+            opacity: 0;
+            transition: .2s ease-in;
+            margin-right: 3px;
+            &.active {
+                opacity: 1 !important;
+            }
+        }
+        &:hover {
+            opacity: .7;
+            svg {
+                opacity: 1;
+            }
+        }
+    }
 `
