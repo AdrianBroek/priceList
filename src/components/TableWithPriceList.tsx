@@ -144,6 +144,12 @@ const headCells: readonly HeadCell[] = [
       label: 'height',
     },
     {
+      id: 'weight',
+      numeric: true,
+      disablePadding: false,
+      label: 'weight',
+    },
+    {
       id: 'quantity',
       numeric: true,
       disablePadding: false,
@@ -291,15 +297,6 @@ export default function EnhancedTable() {
       setRows(mappedRows); 
     }, [priceTable])
 
-    // const rowsMaking = priceTable.forEach((price: any) => {
-    //     // console.log(product.title)
-    //     rows.push(createData(price.id, price.title, price.area, price.width, price.depth, price.height, price.weight, price.quantity))
-    // })
-    // const rows: Data[] = []
-      //   const rows = [
-  //   createData(305,'Cupcake', 3.7, 67, 4.3,5,5,5),
-  //   createData( 452,'Donut', 25.0, 51, 4.9,5,5,5),
-  // ];
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -358,17 +355,14 @@ export default function EnhancedTable() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const visibleRows = React.useMemo(
-    () =>
+  const visibleRows = React.useMemo(() =>
       stableSort(rows, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
-      ),
-    [order, orderBy, page, rowsPerPage],
-  );
+  ),[order, orderBy, page, rowsPerPage, rows],);
 
   const deleteHandler = () => {
-    console.log(selected)
+    // console.log(selected)
     const newArr = [...selected]
     dispatch(removePriceList(newArr))
   }
@@ -434,6 +428,7 @@ export default function EnhancedTable() {
                     <TableCell align="right">{row.width}</TableCell>
                     <TableCell align="right">{row.depth}</TableCell>
                     <TableCell align="right">{row.height}</TableCell>
+                    <TableCell align="right">{row.weight}</TableCell>
                     <TableCell align="right">{row.quantity}</TableCell>
                   </TableRow>
                 );
