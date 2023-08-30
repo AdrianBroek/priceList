@@ -46,7 +46,6 @@ export const TableHeadComponent = ({sort, tableHeadColumn}: Sort & TableHeadColu
 }
 
 const MatchedProductsTable = () => {
-
     const productsWithPrice = useSelector((state:any) => state.productsWithPrice)
     const [rows, setRows] = useState<ProductsWithPriceList[]>([])
     const [tableHeadColumn, setTableHeadColumn] = useState<TableHeadColumns[]>([

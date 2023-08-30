@@ -28,9 +28,24 @@ const MatchArea = () => {
               // if product have sku
               if(product.id){
                 // oblicz pp produktu
+
+                // 200mm dla każdego boku, bo paczki są mniej więcej tak pakowane
+                let additional = 500
+
+                // dla podtynkowych itemów
+                if(product.title.includes('Podtynkowa')
+                || product.title.includes('podtynkowa')){
+                    additional = 700
+                }
+                
+                // gabaryty + dodatkowy rozmiar
+                let width = product.width + additional
+                let height = product.height + additional
+                let depth = product.depth + additional
+
                 let prodArea: number = 0;
-                if(product.depth && product.width && product.height){
-                    prodArea = 2 * (product.depth * product.width + product.depth * product.height + product.width * product.height)
+                if(depth && width && height){
+                    prodArea = 2 * (depth * width + depth * height + width * height)
                 }
                 // jesli cennik w state
                 if(priceTable && prodArea){
