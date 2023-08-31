@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Papa from 'papaparse'
 import { fetchProductsSuccess } from '../store/productSlice';
 import { useDispatch } from 'react-redux';
@@ -89,6 +90,8 @@ const LoadProductsFromCsv = () => {
     }
   },[prodList])
 
+  const theme = useSelector((state: any) => state.theme)
+
   return (
     <section>
       <Form>
@@ -99,7 +102,7 @@ const LoadProductsFromCsv = () => {
         // onDragLeave={e => fileInputDragLeave(e)}
         // onDrop={e => fileInputDragDrop(e)} 
         />
-        <FileInputStyled>
+        <FileInputStyled className={theme.mode =='light' ? 'light' : 'dark'}>
           {fileName ? 
             <div>
               <InsertDriveFileOutlinedIcon />
@@ -150,6 +153,10 @@ const FileInputStyled = styled.div`
   border-radius: 4px;
   background-color: #121212;
   padding: 1rem 0;
+  &.light {
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+    background-color: #FFFFFF;
+  }
   p {
     margin: 0 auto;
   }

@@ -30,12 +30,12 @@ const MatchArea = () => {
                 // oblicz pp produktu
 
                 // 200mm dla każdego boku, bo paczki są mniej więcej tak pakowane
-                let additional = 500
+                let additional = 50
 
                 // dla podtynkowych itemów
                 if(product.title.includes('Podtynkowa')
                 || product.title.includes('podtynkowa')){
-                    additional = 700
+                    additional = 70
                 }
                 
                 // gabaryty + dodatkowy rozmiar

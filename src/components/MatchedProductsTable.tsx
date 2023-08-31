@@ -115,17 +115,19 @@ const MatchedProductsTable = () => {
         setRows(productsWithPrice) 
     },[productsWithPrice])
 
+    const theme = useSelector((state: any) => state.theme)
+
     return (
         <Container>
             {rows.length > 0 && ( 
-                <Matchedtable>
+                <Matchedtable className={theme.mode =='light' ? 'light' : 'dark'}>
                     <TableHeadComponent 
                     sort={sort} 
                     tableHeadColumn={tableHeadColumn} 
                     />
                     {rows.map((product:ProductsWithPriceList) => (
                         <>
-                            <Table>
+                            <Table className={theme.mode =='light' ? 'light' : 'dark'}>
                                 <TableRow>{product.id}</TableRow>
                                 <TableRow>{product.title}</TableRow>
                                 <TableRow>{product.width}</TableRow>
@@ -156,6 +158,9 @@ const Matchedtable = styled.section`
     background-color: #121212;
     padding: 1rem 0;
     min-width: 730px;
+    &.light {
+        background-color: #ffffff;
+    }
 `
 
 const Table = styled.div `
@@ -165,6 +170,12 @@ const Table = styled.div `
     border-top: 1px solid rgba(81, 81, 81, 1);
     &:hover {
         background-color: rgba(255, 255, 255, 0.08);
+    }
+    &.light {
+        border-top: 1px solid rgba(224, 224, 224, 1);
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
     }
 `
 const TableRow = styled.div `
