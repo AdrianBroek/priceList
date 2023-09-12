@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import React from "react";
 import { ProductsWithPriceList } from "../components/types/ProductsWithPrice";
 
 const initialState: ProductsWithPriceList[] = []

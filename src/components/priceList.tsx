@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from '../hooks'
 import { addPriceList } from "../store/priceSlice";
+import { fetchPriceList } from "../actions/fetchPriceListData";
 // types
 import { SinglePriceList, SinglePriceListArea } from "./types/SinglePriceList";
 // style
@@ -18,8 +20,10 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
 const PriceList = () => {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const {priceTable} = useSelector((state:any)=> state.priceList)
+    const userData = useSelector((state:any) => state.userData)
 
     const [input, setInput] = useState<SinglePriceList>({
         id: 0,
@@ -30,10 +34,6 @@ const PriceList = () => {
         depth: 0,
         quantity: 0
     })
-
-    useEffect(()=> {
-        // console.log(priceTable)
-    }, [])
 
     function inputHandler(e:React.ChangeEvent<HTMLInputElement>){
         const value = e.target.value
@@ -80,10 +80,50 @@ const PriceList = () => {
         }
     }
 
+    function insertPriceListToDB() {
+        if(userData){
+          const databaseURL = 'https://tester-a7ca6-default-rtdb.europe-west1.firebasedatabase.app';
+          const path = `/userId/${userData.id}.json`; // Ścieżka do danych w bazie
+
+          // Wykonaj żądanie GET, aby pobrać dane
+          fetch(databaseURL + path,{
+            method: "PUT",
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(priceTable)
+          })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json(); // Parsuj odpowiedź JSON
+          })
+          .then((data) => {
+            console.log('Zaktualizowane dane:', data);
+            // Tutaj możesz obsłużyć potwierdzenie zaktualizowania danych
+          })
+          .catch((error) => {
+            console.error('Błąd aktualizacji danych:', error);
+          });
+        }
+        // else if(!user) {
+        //   console.log(user)
+        //   throw new Error('user is not logged in')
+        // }
+        
+    }
+
     function addNewPrice(e:React.FormEvent<HTMLFormElement>) {
-        // console.log(e)
+        console.log(input)
         e.preventDefault()
-        if (input){
+        if (input.id >= 0 
+            && input.title.length > 0 
+            && input.weight > 0 
+            && input.height > 0 
+            && input.width > 0 
+            && input.depth > 0 
+            && input.quantity > 0 ){
             const newPriceTable: SinglePriceListArea[] = [
                 {
                     id: input.id+=1,
@@ -96,9 +136,40 @@ const PriceList = () => {
                     area: parseFloat(((2 * (input.depth * input.width + input.depth * input.height + input.width * input.height)) / input.quantity).toFixed(2))
                 }
             ]
-            dispatch(addPriceList(newPriceTable))
+            dispatch(addPriceList(newPriceTable))   
         }
     }
+
+    // after adding priceList add to database in firebase
+    useEffect(()=> {
+        if(userData){
+            insertPriceListToDB()
+        }
+    }, [priceTable])
+
+    // receive data from firebase after logged user
+    useEffect(()=> {
+        if(userData.logged && priceTable.length == 0){
+            const promise = async () => {
+                return await dispatch(fetchPriceList(`https://tester-a7ca6-default-rtdb.europe-west1.firebasedatabase.app/userId/${userData.id}.json`))
+
+            }
+            const promiseLoaded = async() => {
+                const res = await promise()
+                return res
+            } 
+            promiseLoaded().then((result) => {
+                console.log(result.payload);
+                dispatch(addPriceList(result.payload))
+                
+            });
+            // console.log('elo')
+            // console.log(priceListFromUserDB)
+            // if(priceListFromUserDB){
+            //     dispatch(addPriceList(priceTable))
+            // }
+        }
+    }, [userData])
 
     return (
         <React.Fragment>

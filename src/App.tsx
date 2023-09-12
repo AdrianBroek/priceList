@@ -12,18 +12,22 @@ import { ThemeProvider, useTheme, createTheme } from '@mui/material/styles';
 import { amber, deepOrange, grey } from '@mui/material/colors';
 import { PaletteMode, Switch } from '@mui/material';
 import ModeSwitch from './components/modeSwitch'
+import Login from './components/testAuth';
+import { auth } from './firebase';
+import GoogleAuth from './components/googleAuth';
 
 function App() {
     const dispatch = useDispatch();
     const counter = useSelector((state:any) => state.counter.value);
-   
+    const user = auth.currentUser;
     const handleIncrement = () => {
       dispatch(increment());
     };
 
     useEffect(()=> {
-      // console.log(counter.value)
-    }, [counter])
+      console.log(user)
+    }, [user])
+    
     const getDesignTokens = (mode: PaletteMode) => ({
       palette: {
         mode,
@@ -62,6 +66,8 @@ function App() {
         <button onClick={()=>dispatch(decrement())}></button> */}
         <ModeSwitch />
         <CSVReader />
+        {/* <Login /> */}
+        <GoogleAuth />
         <ProudctList />
         <PriceList />
         <EnhancedTable />

@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import PriceList from "../components/priceList";
 import { SinglePriceList } from "../components/types/SinglePriceList";
+import { Dispatch } from 'redux';
+
 
 interface PriceList {
     priceTable: SinglePriceList[]
@@ -23,10 +25,12 @@ const priceListSlice = createSlice({
         removePriceList: (state, action: PayloadAction<number[]>) => {
             const idToDelete = action.payload
             state.priceTable = state.priceTable.filter(item => !idToDelete.includes(item.id))
-            // state.priceTable = state.priceTable.filter(item => item.id != action.payload);
+        },
+        resetPriceList: (state) => {
+            return initialState
         }
     }
 })
 
-export const { addPriceList, removePriceList } = priceListSlice.actions;
+export const { addPriceList, removePriceList, resetPriceList } = priceListSlice.actions;
 export default priceListSlice.reducer;
