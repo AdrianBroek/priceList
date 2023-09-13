@@ -149,12 +149,11 @@ export default MatchedProductsTable
 
 const Container = styled.section`
     overflow-x: auto;
+    border-radius: 4px;
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
 `
 
 const Matchedtable = styled.section`
-    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
-    background-image: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
-    border-radius: 4px;
     background-color: #121212;
     padding: 1rem 0;
     min-width: 730px;
@@ -183,6 +182,7 @@ const TableRow = styled.div `
     align-items: center;
     justify-content: center;
     width: 100%;
+    font-size: 0.875rem;
 `
 
 const TableHead = styled.div `

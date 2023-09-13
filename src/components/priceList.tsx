@@ -85,7 +85,6 @@ const PriceList = () => {
           const databaseURL = 'https://tester-a7ca6-default-rtdb.europe-west1.firebasedatabase.app';
           const path = `/userId/${userData.id}.json`; // Ścieżka do danych w bazie
 
-          // Wykonaj żądanie GET, aby pobrać dane
           fetch(databaseURL + path,{
             method: "PUT",
             headers: {
@@ -100,22 +99,15 @@ const PriceList = () => {
             return response.json(); // Parsuj odpowiedź JSON
           })
           .then((data) => {
-            console.log('Zaktualizowane dane:', data);
-            // Tutaj możesz obsłużyć potwierdzenie zaktualizowania danych
+            // console.log('Zaktualizowane dane:', data);
           })
           .catch((error) => {
             console.error('Błąd aktualizacji danych:', error);
           });
         }
-        // else if(!user) {
-        //   console.log(user)
-        //   throw new Error('user is not logged in')
-        // }
-        
     }
 
     function addNewPrice(e:React.FormEvent<HTMLFormElement>) {
-        console.log(input)
         e.preventDefault()
         if (input.id >= 0 
             && input.title.length > 0 
@@ -159,15 +151,9 @@ const PriceList = () => {
                 return res
             } 
             promiseLoaded().then((result) => {
-                console.log(result.payload);
-                dispatch(addPriceList(result.payload))
-                
+                // console.log(result)
+                if (result.payload) dispatch(addPriceList(result.payload))
             });
-            // console.log('elo')
-            // console.log(priceListFromUserDB)
-            // if(priceListFromUserDB){
-            //     dispatch(addPriceList(priceTable))
-            // }
         }
     }, [userData])
 
@@ -175,9 +161,7 @@ const PriceList = () => {
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="xl" sx={{margin: '2rem auto'}}>
-                <Box sx={{ 
-                    // maxHeight: '250px',
-                }} >
+                <Box>
                 <Paper sx={{ 
                     height: '100%',
                     margin: 'auto',

@@ -64,16 +64,18 @@ function App() {
         {/* <p>stan: {counter}</p>
         <button onClick={handleIncrement}>Increment</button>
         <button onClick={()=>dispatch(decrement())}></button> */}
+        <GoogleAuth />
         <ModeSwitch />
         <CSVReader />
         {/* <Login /> */}
-        <GoogleAuth />
+        
         <ProudctList />
         <PriceList />
         <EnhancedTable />
         <MatchArea />
       </div>
       </ThemeProvider>
+      
     );
 }
 

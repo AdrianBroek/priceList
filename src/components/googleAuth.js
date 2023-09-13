@@ -7,17 +7,14 @@ import { logoutUser } from '../store/userSlice';
 import { resetPriceList } from '../store/priceSlice';
 // mui
 import Button from '@mui/material/Button';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import GoogleIcon from '@mui/icons-material/Google';import SendIcon from '@mui/icons-material/Send';
-
+import Profile from '../layout/profile';
 
 const GoogleAuth = () => {
   const dispatch = useDispatch()
   const auth = getAuth();
-  const [user, setUser] = useState(null)
   const provider = new GoogleAuthProvider();
   const userData = useSelector(state => state.userData)
-  const {priceTable} = useSelector(state => state.priceList)
 
   const signInGoogle = () => signInWithPopup(auth, provider)
     .then((result) => {
@@ -37,9 +34,6 @@ const GoogleAuth = () => {
         photoUrl: userLogged.photoURL,
         logged: true
       }))
-      // console.log(auth)
-      setUser(auth.currentUser)
-      // console.log(userLogged)
       // IdP data available using getAdditionalUserInfo(result)
       // ...
     }).catch((error) => {
@@ -55,26 +49,19 @@ const GoogleAuth = () => {
      
     });
 
-    useEffect(()=> {
-      // console.log(auth.currentUser)
-      // console.log(user)
-    }, [user])
-
-    const logoutCurrentUser = () => {
-      auth.signOut()
-      // console.log(auth)
-      setUser(auth.currentUser)
-      // console.log(user)
-      dispatch(logoutUser())
-      dispatch(resetPriceList())
-    }
+    // const logoutCurrentUser = () => {
+    //   auth.signOut()
+    //   // console.log(auth)
+    //   setUser(auth.currentUser)
+    //   // console.log(user)
+    //   dispatch(logoutUser())
+    //   dispatch(resetPriceList())
+    // }
       
     return (
         <>
         {userData.logged ? 
-          <Button onClick={()=>logoutCurrentUser()} sx={{margin: '1rem'}} variant="contained" endIcon={<ExitToAppIcon />}>
-            Logout
-          </Button>
+          <Profile />
           : 
           <Button onClick={signInGoogle} sx={{margin: '1rem'}} variant="contained" endIcon={<GoogleIcon />}>
             Login
