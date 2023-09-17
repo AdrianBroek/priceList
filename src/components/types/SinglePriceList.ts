@@ -9,5 +9,6 @@ export interface SinglePriceList {
 }
 
 export interface SinglePriceListArea extends SinglePriceList {
-    area: number
+    area: number;
+    [key: string]: number | string;
 }

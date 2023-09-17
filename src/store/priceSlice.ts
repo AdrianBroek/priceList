@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import PriceList from "../components/priceList";
 import { SinglePriceList } from "../components/types/SinglePriceList";
 import { Dispatch } from 'redux';
-
+import { EditInputState } from "../components/types/EditPricelist";
 
 interface PriceList {
     priceTable: SinglePriceList[]
@@ -26,11 +26,21 @@ const priceListSlice = createSlice({
             const idToDelete = action.payload
             state.priceTable = state.priceTable.filter(item => !idToDelete.includes(item.id))
         },
+        editPriceList: (state, action: PayloadAction<EditInputState>) => {
+            const editedPriceList = action.payload;
+            state.priceTable.map((price:any) => {
+               if(price.id == editedPriceList.priceId){
+                price[editedPriceList.inputName] = editedPriceList.newValue;
+               }
+               return price;
+            });            
+
+        },
         resetPriceList: (state) => {
             return initialState
         }
     }
 })
 
-export const { addPriceList, removePriceList, resetPriceList } = priceListSlice.actions;
+export const { addPriceList, removePriceList, resetPriceList, editPriceList } = priceListSlice.actions;
 export default priceListSlice.reducer;

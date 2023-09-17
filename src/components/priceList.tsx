@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAppSelector, useAppDispatch } from '../hooks'
-import { addPriceList } from "../store/priceSlice";
+import { addPriceList, removePriceList } from "../store/priceSlice";
 import { fetchPriceList } from "../actions/fetchPriceListData";
 // types
 import { SinglePriceList, SinglePriceListArea } from "./types/SinglePriceList";
-// style
-import styled from 'styled-components';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import {removePriceList} from "../store/priceSlice"
 // mui
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -20,10 +15,9 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
 const PriceList = () => {
-    // const dispatch = useDispatch()
     const dispatch = useAppDispatch()
     const {priceTable} = useSelector((state:any)=> state.priceList)
-    const userData = useSelector((state:any) => state.userData)
+    const userData = useAppSelector((state) => state.userData)
 
     const [input, setInput] = useState<SinglePriceList>({
         id: 0,

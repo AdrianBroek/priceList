@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -23,8 +24,16 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { removePriceList } from '../store/priceSlice';
+import EditIcon from '@mui/icons-material/Edit';
+import { removePriceList, editPriceList } from '../store/priceSlice';
 import { addSyntheticLeadingComment } from 'typescript';
+import Stack from '@mui/material/Stack';
+import { SinglePriceList } from './types/SinglePriceList';
+import TextField from '@mui/material/TextField';
+import { SinglePriceListArea } from './types/SinglePriceList';
+import { EditInputState } from './types/EditPricelist';
+import CheckIcon from '@mui/icons-material/Check';
+import styled from 'styled-components';
 
 interface Data {
     id: number,
@@ -209,6 +218,8 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             </TableSortLabel>
           </TableCell>
         ))}
+        <TableCell>
+        </TableCell>
       </TableRow>
     </TableHead>
   );
@@ -295,6 +306,7 @@ export default function EnhancedTable() {
       }));
 
       setRows(mappedRows); 
+      console.log(rows)
     }, [priceTable])
 
 
@@ -367,6 +379,128 @@ export default function EnhancedTable() {
     dispatch(removePriceList(newArr))
   }
 
+ 
+ 
+
+
+
+  const [editedInputs, setEditedInputs] = useState<SinglePriceListArea>({
+    id: 0,
+    title: '',
+    area: 0,
+    width: 0,
+    depth: 0,
+    height: 0,
+    weight: 0,
+    quantity: 0,
+  })
+
+  React.useEffect(()=> {
+    console.log(editedInputs)
+    // let editedArea: number = 0;
+
+    // let additional:number = 50
+    // // dla podtynkowych itemów
+    // if(editedInputs.title.includes('Podtynkowa')
+    // || editedInputs.title.includes('podtynkowa')){
+    //     additional = 70
+    // }
+    
+    // let width: number = parseFloat(editedInputs.width) + additional
+    // let height: number = parseFloat(editedInputs.height) + additional
+    // let depth: number = parseFloat(editedInputs.depth) + additional
+
+
+    // if(editedInputs.width &&
+    //   editedInputs.depth &&
+    //   editedInputs.height){
+    //   editedArea = parseFloat(2 * (depth * width + depth * height + width * height))
+    //   setEditedInputs((state)=>({
+    //     ...state,
+    //     area: editedArea
+    //   }))
+    // }
+  },[editedInputs])
+
+  const editInputHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const value = e.target.value;
+
+    switch(e.target.id) {
+      case "title" :
+        setEditedInputs(state => ({
+          ...state,
+          title: value
+        }))
+        break;
+      case "depth" :
+        setEditedInputs(state => ({
+          ...state,
+          depth: parseFloat(value)
+        }))
+        break;
+      case "height" :
+        setEditedInputs(state => ({
+          ...state,
+          height: parseFloat(value)
+        }))
+        break;
+      case "width" :
+        setEditedInputs(state => ({
+          ...state,
+          width: parseFloat(value)
+        }))
+        break;
+      case "quantity" :
+        setEditedInputs(state => ({
+          ...state,
+          quantity: parseFloat(value)
+        }))
+        break;
+      case "weight" :
+        setEditedInputs(state => ({
+          ...state,
+          weight: parseFloat(value)
+        }))
+        break;
+    }
+  }
+
+   const [edit, setEdit] = useState({
+    activeRow: 0,
+    active: false,
+    activeField: ''
+  })
+  
+  const editInputHandlerClick = (id:number, field:string) => {
+    if(!edit.active){
+      setEdit((state) => ({
+        activeRow: id,
+        active: true,
+        activeField: field
+      }))
+      console.log('kliasd')
+    }
+  }
+ 
+  const saveEditInput = (id:number, name:string) => {
+    const inputName = name;
+    const newValue = editedInputs[inputName];
+
+    const editInput:EditInputState = {
+      inputName: inputName,
+      priceId: id,
+      newValue: newValue
+    }
+
+    dispatch(editPriceList(editInput))
+
+    setEdit((state) => ({ 
+      ...state,
+      activeRow: 0,
+      active: false
+    }))
+  }
+
   return (
     <Container maxWidth="xl" sx={{margin: '2rem auto'}}>
     <Box sx={{ width: '100%' }}>
@@ -423,13 +557,105 @@ export default function EnhancedTable() {
                     >
                       {row.id}
                     </TableCell>
-                    <TableCell align="right">{row.title}</TableCell>
-                    <TableCell align="right">{row.area}</TableCell>
-                    <TableCell align="right">{row.width}</TableCell>
-                    <TableCell align="right">{row.depth}</TableCell>
-                    <TableCell align="right">{row.height}</TableCell>
-                    <TableCell align="right">{row.weight}</TableCell>
-                    <TableCell align="right">{row.quantity}</TableCell>
+                    <TableCell 
+                    style={edit.active && edit.activeRow == row.id && edit.activeField != "title"? {pointerEvents: "none"} : {pointerEvents: 'all'}} sx={{ position: 'relative' }} id="title" onClick={()=>editInputHandlerClick(row.id, "title")} align="right">
+                      <p style={edit.active && edit.activeRow == row.id && edit.activeField == "title" ? {visibility: "hidden"} : {fontSize: 'visible'}}>
+                      {row.title}
+                      </p>
+                      {edit.activeRow == row.id && edit.activeField == "title" ?
+                        <EditedInputField>
+                          <TextField type='text' size="small" id="title" onChange={editInputHandler} label={row.title} variant="standard" />
+                          <IconButton size="small" id="title" onClick={(e)=>saveEditInput(row.id,'title')} aria-label="check">
+                            <CheckIcon />
+                          </IconButton>
+                        </EditedInputField>
+                        : ""
+                      }
+                    </TableCell>
+
+                    <TableCell align="right">
+                    {row.area}
+                    </TableCell>
+                    <TableCell 
+                    style={edit.active && edit.activeRow == row.id && edit.activeField != "width"? {pointerEvents: "none"} : {pointerEvents: 'all'}} sx={{ position: 'relative' }} id="width" onClick={()=>editInputHandlerClick(row.id, "width")} align="right">
+                      <p style={edit.active && edit.activeRow == row.id && edit.activeField == "width" ? {visibility: "hidden"} : {fontSize: 'visible'}}>
+                      {row.width}
+                      </p>
+                      {edit.activeRow == row.id && edit.activeField == "width" ?
+                        <EditedInputField>
+                          <TextField type='number' size="small" id="width" onChange={editInputHandler} label={row.width} variant="standard" />
+                          <IconButton size="small" id="width" onClick={(e)=>saveEditInput(row.id,'width')} aria-label="check">
+                            <CheckIcon />
+                          </IconButton>
+                        </EditedInputField>
+                        : ""
+                      }
+                    </TableCell>
+                    <TableCell 
+                    style={edit.active && edit.activeRow == row.id && edit.activeField != "depth"? {pointerEvents: "none"} : {pointerEvents: 'all'}} sx={{ position: 'relative' }} id="depth" onClick={()=>editInputHandlerClick(row.id, "depth")} align="right">
+                      <p style={edit.active && edit.activeRow == row.id && edit.activeField == "depth" ? {visibility: "hidden"} : {fontSize: 'visible'}}>
+                      {row.depth}
+                      </p>
+                      {edit.activeRow == row.id && edit.activeField == "depth" ?
+                        <EditedInputField>
+                          <TextField type='number' size="small" id="depth" onChange={editInputHandler} label={row.depth} variant="standard" />
+                          <IconButton size="small" id="depth" onClick={(e)=>saveEditInput(row.id,'depth')} aria-label="check">
+                            <CheckIcon />
+                          </IconButton>
+                        </EditedInputField>
+                        : ""
+                      }
+                    </TableCell>
+                    <TableCell 
+                    style={edit.active && edit.activeRow == row.id && edit.activeField != "height"? {pointerEvents: "none"} : {pointerEvents: 'all'}} sx={{ position: 'relative' }} id="height" onClick={()=>editInputHandlerClick(row.id, "height")} align="right">
+                      <p style={edit.active && edit.activeRow == row.id && edit.activeField == "height" ? {visibility: "hidden"} : {fontSize: 'visible'}}>
+                      {row.height}
+                      </p>
+                      {edit.activeRow == row.id && edit.activeField == "height" ?
+                        <EditedInputField>
+                          <TextField type='number' size="small" id="height" onChange={editInputHandler} label={row.height} variant="standard" />
+                          <IconButton size="small" id="height" onClick={(e)=>saveEditInput(row.id,'height')} aria-label="check">
+                            <CheckIcon />
+                          </IconButton>
+                        </EditedInputField>
+                        : ""
+                      }
+                    </TableCell>
+                    <TableCell
+                    style={edit.active && edit.activeRow == row.id && edit.activeField != "weight"? {pointerEvents: "none"} : {pointerEvents: 'all'}}
+                    sx={{ position: 'relative' }} id="weight" onClick={()=>editInputHandlerClick(row.id, "weight")} align="right">
+                      <p style={edit.active && edit.activeRow == row.id && edit.activeField == "weight"? {visibility: "hidden"} : {visibility: 'visible'}}>
+                      {row.weight}
+                      </p>
+                      {edit.activeRow == row.id && edit.activeField == "weight" ?
+                        <EditedInputField>
+                          <TextField type='number' size="small" id="weight" onChange={editInputHandler} label={row.weight} variant="standard" />
+                          <IconButton size="small" id="weight" onClick={(e)=>saveEditInput(row.id,'weight')} aria-label="check">
+                            <CheckIcon />
+                          </IconButton>
+                        </EditedInputField>
+                        : ""
+                      }
+                    </TableCell>
+                    <TableCell 
+                    style={edit.active && edit.activeRow == row.id && edit.activeField != "quantity"? {pointerEvents: "none"} : {pointerEvents: 'all'}} sx={{ position: 'relative' }} id="quantity" onClick={()=>editInputHandlerClick(row.id, "quantity")} align="right">
+                      <p style={edit.active && edit.activeRow == row.id && edit.activeField == "quantity" ? {visibility: "hidden"} : {fontSize: 'visible'}}>
+                      {row.quantity}
+                      </p>
+                      {edit.activeRow == row.id && edit.activeField == "quantity" ?
+                        <EditedInputField>
+                          <TextField type='text' size="small" id="quantity" onChange={editInputHandler} label={row.quantity} variant="standard" />
+                          <IconButton size="small" id="quantity" onClick={(e)=>saveEditInput(row.id,'quantity')} aria-label="check">
+                            <CheckIcon />
+                          </IconButton>
+                        </EditedInputField>
+                        : ""
+                      }
+                    </TableCell>
+                    <TableCell align="right">
+                      <Stack direction="row" spacing={1}>
+                      </Stack>
+                    </TableCell>
                   </TableRow>
                 );
               })}
@@ -455,11 +681,28 @@ export default function EnhancedTable() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
+      {/* <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
-      />
+      /> */}
     </Box>
     </Container>
   );
 }
+
+const EditedInputField = styled.div`
+  position: absolute;
+  top: 25%;
+  width: 45px;
+  right: 0;
+  transform: translateY(-25%);
+  button {
+    top: 50%;
+    transform: translateY(-50%);
+    right: -30px;
+    position: absolute;
+  } 
+  input {
+    font-size: .8rem; 
+  }
+`
