@@ -24,11 +24,8 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import EditIcon from '@mui/icons-material/Edit';
-import { removePriceList, editPriceList } from '../store/priceSlice';
-import { addSyntheticLeadingComment } from 'typescript';
+import { removePriceList, editPriceListField } from '../store/priceSlice';
 import Stack from '@mui/material/Stack';
-import { SinglePriceList } from './types/SinglePriceList';
 import TextField from '@mui/material/TextField';
 import { SinglePriceListArea } from './types/SinglePriceList';
 import { EditInputState } from './types/EditPricelist';
@@ -379,11 +376,8 @@ export default function EnhancedTable() {
     dispatch(removePriceList(newArr))
   }
 
- 
- 
 
-
-
+// edit handler
   const [editedInputs, setEditedInputs] = useState<SinglePriceListArea>({
     id: 0,
     title: '',
@@ -394,33 +388,6 @@ export default function EnhancedTable() {
     weight: 0,
     quantity: 0,
   })
-
-  React.useEffect(()=> {
-    console.log(editedInputs)
-    // let editedArea: number = 0;
-
-    // let additional:number = 50
-    // // dla podtynkowych itemów
-    // if(editedInputs.title.includes('Podtynkowa')
-    // || editedInputs.title.includes('podtynkowa')){
-    //     additional = 70
-    // }
-    
-    // let width: number = parseFloat(editedInputs.width) + additional
-    // let height: number = parseFloat(editedInputs.height) + additional
-    // let depth: number = parseFloat(editedInputs.depth) + additional
-
-
-    // if(editedInputs.width &&
-    //   editedInputs.depth &&
-    //   editedInputs.height){
-    //   editedArea = parseFloat(2 * (depth * width + depth * height + width * height))
-    //   setEditedInputs((state)=>({
-    //     ...state,
-    //     area: editedArea
-    //   }))
-    // }
-  },[editedInputs])
 
   const editInputHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -484,9 +451,10 @@ export default function EnhancedTable() {
   const saveEditInput = (id:number, name:string) => {
     const inputName = name;
     const newValue = editedInputs[inputName];
-    const prevValuePriceTable = priceTable.filter((row:SinglePriceListArea) => row.id === id)[0]
-    const prevValue = prevValuePriceTable[name];
+    const editedPriceTable = priceTable.filter((row:SinglePriceListArea) => row.id === id)[0]
+    const prevValue = editedPriceTable[name];
 
+    // reset inputs
     setEditedInputs({
       id: 0,
       title: '',
@@ -510,14 +478,14 @@ export default function EnhancedTable() {
         priceId: id,
         newValue: prevValue
       }
-      dispatch(editPriceList(editInput))
+      dispatch(editPriceListField(editInput))
     }else {
       editInput = {
         inputName: inputName,
         priceId: id,
         newValue: newValue
       }
-      dispatch(editPriceList(editInput))
+      dispatch(editPriceListField(editInput))
     }
 
     setEdit((state) => ({ 
@@ -525,6 +493,14 @@ export default function EnhancedTable() {
       activeRow: 0,
       active: false
     }))
+    // recalculate area for edited pricelist
+    const newArea = parseFloat(((2 * (editedPriceTable.depth * editedPriceTable.width + editedPriceTable.depth * editedPriceTable.height + editedPriceTable.width * editedPriceTable.height)) / editedPriceTable.quantity).toFixed(2))
+    editInput = {
+      inputName: 'area',
+      priceId: id,
+      newValue: newArea
+    }
+    dispatch(editPriceListField(editInput))
   }
 
   return (

@@ -32,11 +32,11 @@ const MatchArea = () => {
                 // 200mm dla każdego boku, bo paczki są mniej więcej tak pakowane
                 let additional = 50
 
-                // dla podtynkowych itemów
-                if(product.title.includes('Podtynkowa')
-                || product.title.includes('podtynkowa')){
-                    additional = 70
-                }
+                // // dla podtynkowych itemów
+                // if(product.title.includes('Podtynkowa')
+                // || product.title.includes('podtynkowa')){
+                //     additional = 70
+                // }
                 
                 // gabaryty + dodatkowy rozmiar
                 let width = product.width + additional

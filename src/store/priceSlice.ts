@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import PriceList from "../components/priceList";
-import { SinglePriceList } from "../components/types/SinglePriceList";
+import { SinglePriceList, SinglePriceListArea } from "../components/types/SinglePriceList";
 import { Dispatch } from 'redux';
 import { EditInputState } from "../components/types/EditPricelist";
 
@@ -26,7 +26,7 @@ const priceListSlice = createSlice({
             const idToDelete = action.payload
             state.priceTable = state.priceTable.filter(item => !idToDelete.includes(item.id))
         },
-        editPriceList: (state, action: PayloadAction<EditInputState>) => {
+        editPriceListField: (state, action: PayloadAction<EditInputState>) => {
             const editedPriceList = action.payload;
             state.priceTable.map((price:any) => {
                if(price.id == editedPriceList.priceId){
@@ -42,5 +42,5 @@ const priceListSlice = createSlice({
     }
 })
 
-export const { addPriceList, removePriceList, resetPriceList, editPriceList } = priceListSlice.actions;
+export const { addPriceList, removePriceList, resetPriceList, editPriceListField } = priceListSlice.actions;
 export default priceListSlice.reducer;

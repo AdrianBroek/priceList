@@ -15,6 +15,7 @@ import ModeSwitch from './components/modeSwitch'
 import Login from './components/testAuth';
 import { auth } from './firebase';
 import GoogleAuth from './components/googleAuth';
+import BoxSizes from './components/BoxSizes';
 
 function App() {
     const dispatch = useDispatch();
@@ -72,10 +73,10 @@ function App() {
         <ProudctList />
         <PriceList />
         <EnhancedTable />
+        <BoxSizes />
         <MatchArea />
       </div>
       </ThemeProvider>
-      
     );
 }
 
