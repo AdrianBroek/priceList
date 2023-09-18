@@ -306,7 +306,7 @@ export default function EnhancedTable() {
       }));
 
       setRows(mappedRows); 
-      console.log(rows)
+      // console.log(rows)
     }, [priceTable])
 
 
@@ -478,21 +478,47 @@ export default function EnhancedTable() {
         active: true,
         activeField: field
       }))
-      console.log('kliasd')
     }
   }
  
   const saveEditInput = (id:number, name:string) => {
     const inputName = name;
     const newValue = editedInputs[inputName];
+    const prevValuePriceTable = priceTable.filter((row:SinglePriceListArea) => row.id === id)[0]
+    const prevValue = prevValuePriceTable[name];
 
-    const editInput:EditInputState = {
-      inputName: inputName,
-      priceId: id,
-      newValue: newValue
+    setEditedInputs({
+      id: 0,
+      title: '',
+      area: 0,
+      width: 0,
+      depth: 0,
+      height: 0,
+      weight: 0,
+      quantity: 0,
+    })
+
+    let editInput:EditInputState = {
+      inputName: '',
+      priceId: 0,
+      newValue: ''
     }
 
-    dispatch(editPriceList(editInput))
+    if(newValue === 0){
+      editInput = {
+        inputName: inputName,
+        priceId: id,
+        newValue: prevValue
+      }
+      dispatch(editPriceList(editInput))
+    }else {
+      editInput = {
+        inputName: inputName,
+        priceId: id,
+        newValue: newValue
+      }
+      dispatch(editPriceList(editInput))
+    }
 
     setEdit((state) => ({ 
       ...state,
@@ -564,7 +590,7 @@ export default function EnhancedTable() {
                       </p>
                       {edit.activeRow == row.id && edit.activeField == "title" ?
                         <EditedInputField>
-                          <TextField type='text' size="small" id="title" onChange={editInputHandler} label={row.title} variant="standard" />
+                          <TextField placeholder='new' focused type='text' size="small" id="title" onChange={editInputHandler} label={row.title} variant="standard" />
                           <IconButton size="small" id="title" onClick={(e)=>saveEditInput(row.id,'title')} aria-label="check">
                             <CheckIcon />
                           </IconButton>
@@ -583,7 +609,7 @@ export default function EnhancedTable() {
                       </p>
                       {edit.activeRow == row.id && edit.activeField == "width" ?
                         <EditedInputField>
-                          <TextField type='number' size="small" id="width" onChange={editInputHandler} label={row.width} variant="standard" />
+                          <TextField placeholder='new' focused type='number' size="small" id="width" onChange={editInputHandler} label={row.width} variant="standard" />
                           <IconButton size="small" id="width" onClick={(e)=>saveEditInput(row.id,'width')} aria-label="check">
                             <CheckIcon />
                           </IconButton>
@@ -598,7 +624,7 @@ export default function EnhancedTable() {
                       </p>
                       {edit.activeRow == row.id && edit.activeField == "depth" ?
                         <EditedInputField>
-                          <TextField type='number' size="small" id="depth" onChange={editInputHandler} label={row.depth} variant="standard" />
+                          <TextField placeholder='new' focused type='number' size="small" id="depth" onChange={editInputHandler} label={row.depth} variant="standard" />
                           <IconButton size="small" id="depth" onClick={(e)=>saveEditInput(row.id,'depth')} aria-label="check">
                             <CheckIcon />
                           </IconButton>
@@ -613,7 +639,7 @@ export default function EnhancedTable() {
                       </p>
                       {edit.activeRow == row.id && edit.activeField == "height" ?
                         <EditedInputField>
-                          <TextField type='number' size="small" id="height" onChange={editInputHandler} label={row.height} variant="standard" />
+                          <TextField placeholder='new' focused type='number' size="small" id="height" onChange={editInputHandler} label={row.height} variant="standard" />
                           <IconButton size="small" id="height" onClick={(e)=>saveEditInput(row.id,'height')} aria-label="check">
                             <CheckIcon />
                           </IconButton>
@@ -629,7 +655,7 @@ export default function EnhancedTable() {
                       </p>
                       {edit.activeRow == row.id && edit.activeField == "weight" ?
                         <EditedInputField>
-                          <TextField type='number' size="small" id="weight" onChange={editInputHandler} label={row.weight} variant="standard" />
+                          <TextField placeholder='new' focused type='number' size="small" id="weight" onChange={editInputHandler} label={row.weight} variant="standard" />
                           <IconButton size="small" id="weight" onClick={(e)=>saveEditInput(row.id,'weight')} aria-label="check">
                             <CheckIcon />
                           </IconButton>
@@ -644,7 +670,7 @@ export default function EnhancedTable() {
                       </p>
                       {edit.activeRow == row.id && edit.activeField == "quantity" ?
                         <EditedInputField>
-                          <TextField type='text' size="small" id="quantity" onChange={editInputHandler} label={row.quantity} variant="standard" />
+                          <TextField placeholder='new' focused type='text' size="small" id="quantity" onChange={editInputHandler} label={row.quantity} variant="standard" />
                           <IconButton size="small" id="quantity" onClick={(e)=>saveEditInput(row.id,'quantity')} aria-label="check">
                             <CheckIcon />
                           </IconButton>
