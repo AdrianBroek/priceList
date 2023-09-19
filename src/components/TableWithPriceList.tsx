@@ -472,7 +472,7 @@ export default function EnhancedTable() {
       newValue: ''
     }
 
-    if(newValue === 0){
+    if(newValue === 0 || newValue === ''){
       editInput = {
         inputName: inputName,
         priceId: id,
@@ -560,12 +560,12 @@ export default function EnhancedTable() {
                       {row.id}
                     </TableCell>
                     <TableCell 
-                    style={edit.active && edit.activeRow == row.id && edit.activeField != "title"? {pointerEvents: "none"} : {pointerEvents: 'all'}} sx={{ position: 'relative' }} id="title" onClick={()=>editInputHandlerClick(row.id, "title")} align="right">
+                    style={edit.active && edit.activeRow == row.id && edit.activeField != "title"? {pointerEvents: "none"} : {pointerEvents: 'all'}} sx={{ position: 'relative' }} id="title" onClick={()=>editInputHandlerClick(row.id, "title")} align="left">
                       <p style={edit.active && edit.activeRow == row.id && edit.activeField == "title" ? {visibility: "hidden"} : {fontSize: 'visible'}}>
                       {row.title}
                       </p>
                       {edit.activeRow == row.id && edit.activeField == "title" ?
-                        <EditedInputField>
+                        <EditedInputField className='title'>
                           <TextField placeholder='new' focused type='text' size="small" id="title" onChange={editInputHandler} label={row.title} variant="standard" />
                           <IconButton size="small" id="title" onClick={(e)=>saveEditInput(row.id,'title')} aria-label="check">
                             <CheckIcon />
@@ -698,6 +698,9 @@ const EditedInputField = styled.div`
   width: 45px;
   right: 0;
   transform: translateY(-25%);
+  &.title {
+    width: 100%;
+  }
   button {
     top: 50%;
     transform: translateY(-50%);
