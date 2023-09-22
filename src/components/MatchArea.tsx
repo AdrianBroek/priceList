@@ -5,6 +5,7 @@ import { Product } from "./types/Product";
 import { SinglePriceList, SinglePriceListArea } from "./types/SinglePriceList";
 import { ProductsWithPriceList } from "./types/ProductsWithPrice";
 import { useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { addProductsWithPrice } from "../store/productsWithPriceSlice";
 // mui
 import Box from '@mui/material/Box';
@@ -12,12 +13,14 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MatchedProductsTable from "./MatchedProductsTable";
 
+
 const MatchArea = () => {
-    const {priceTable} = useSelector((state:any)=> state.priceList)
-    const {productList} = useSelector((state:any)=> state.products)
-    const productsWithPrice = useSelector((state:any) => state.productsWithPrice)
+    const {priceTable} = useAppSelector((state:any)=> state.priceList)
+    const {productList} = useAppSelector((state:any)=> state.products)
+    const productsWithPrice = useAppSelector((state:any) => state.productsWithPrice)
+    const {sizeA, sizeB, sizeC} = useAppSelector(state => state.additional.sizes)
     const productsArray: ProductsWithPriceList[] = []
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     // match products and add them to row state
     function matchProductsToPriceList(){
@@ -39,9 +42,9 @@ const MatchArea = () => {
                 // }
                 
                 // gabaryty + dodatkowy rozmiar
-                let width = product.width + additional
-                let height = product.height + additional
-                let depth = product.depth + additional
+                let width = product.width + sizeA
+                let height = product.height + sizeB
+                let depth = product.depth + sizeC
 
                 let prodArea: number = 0;
                 if(depth && width && height){
