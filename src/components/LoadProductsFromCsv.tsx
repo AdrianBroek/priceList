@@ -8,6 +8,9 @@ import styled from "@emotion/styled";
 // modal mui
 import BasicModal from './ModalMui'
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
+import { IconButton } from '@mui/material';
+
 
 const LoadProductsFromCsv = () => {
   const [loadedItems, setLoadedItems] = useState<Product[]>([])
@@ -109,7 +112,10 @@ const LoadProductsFromCsv = () => {
               <h6>{fileName}</h6>
             </div>
           :
-            <p>Upload CSV file</p>
+            // <p>Upload CSV file</p>
+            <IconButton sx={{fontSize: '.9rem', fontWeight: 500}} aria-label="upload">
+              <p>Upload CSV file</p><DriveFolderUploadIcon sx={{marginLeft: '.5rem'}}/>
+            </IconButton>
           }
         </FileInputStyled>
         <BasicModal open={open} setOpen={setOpen}/>

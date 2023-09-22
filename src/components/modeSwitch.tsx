@@ -66,7 +66,11 @@ export default function ModeSwitch() {
             onChange={handleChange}
             control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
             label=""
-            sx={{left: '5%', position: "absolute", zIndex:"99"}}
+            sx={{
+              // left: '5%', position: "absolute", 
+              margin: "auto",
+              zIndex:"99"
+            }}
         />
     );
 }

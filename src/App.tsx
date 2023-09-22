@@ -11,16 +11,20 @@ import Box from '@mui/material/Box';
 import { ThemeProvider, useTheme, createTheme } from '@mui/material/styles';
 import { amber, deepOrange, grey } from '@mui/material/colors';
 import { PaletteMode, Switch } from '@mui/material';
-import ModeSwitch from './components/modeSwitch'
 import Login from './components/testAuth';
 import { auth } from './firebase';
 import GoogleAuth from './components/googleAuth';
 import BoxSizes from './components/BoxSizes';
+import ResponsiveAppBar from './layout/appBar';
+import { Routes , Route, useLocation } from "react-router-dom";
+import HomePage from './layout/HomePage';
+import HowTo from './layout/HowTo';
 
 function App() {
     const dispatch = useDispatch();
     const counter = useSelector((state:any) => state.counter.value);
     const user = auth.currentUser;
+    const location = useLocation()
     const handleIncrement = () => {
       dispatch(increment());
     };
@@ -62,19 +66,11 @@ function App() {
     return (
       <ThemeProvider theme={theme}>
       <div className="App">
-        {/* <p>stan: {counter}</p>
-        <button onClick={handleIncrement}>Increment</button>
-        <button onClick={()=>dispatch(decrement())}></button> */}
-        <GoogleAuth />
-        <ModeSwitch />
-        <CSVReader />
-        {/* <Login /> */}
-        
-        <ProudctList />
-        <PriceList />
-        <EnhancedTable />
-        <BoxSizes />
-        <MatchArea />
+        <ResponsiveAppBar />
+        <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<HomePage />} ></Route>
+          <Route path='/how-to' element={<HowTo />}></Route>
+        </Routes>
       </div>
       </ThemeProvider>
     );

@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import AddIcon from '@mui/icons-material/Add';
 
 const PriceList = () => {
     const dispatch = useAppDispatch()
@@ -181,7 +182,7 @@ const PriceList = () => {
                         <TextField required id="depth" label="depth" variant="filled" onChange={inputHandler} type="number" placeholder="głębokość" />
                         <TextField required id="quantity" label="quantity" variant="filled" onChange={inputHandler} type="text" placeholder="Ilość elementów w paczce" />
                         </div>
-                        <Button sx={{margin: '1rem'}} type="submit" variant="contained" endIcon={<SendIcon />}>
+                        <Button sx={{margin: '1rem'}} type="submit" variant="contained" endIcon={<AddIcon />}>
                             Add pricelist
                         </Button>
                     </Box>
