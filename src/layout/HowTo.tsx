@@ -16,17 +16,19 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import Grid from '@mui/material/Unstable_Grid2';
 
  const HowTo = () => {
-  return (
+    const token = process.env.REACT_APP_MY_TOKEN;
+    const url = `https://firebasestorage.googleapis.com/v0/b/tester-a7ca6.appspot.com/o/example.csv?alt=media&token=${token}`;
+    return (
         <Box sx={{ margin: '2rem auto' }}>
         <Grid container spacing={2} sx={{justifyContent: "center"}}>
             <Grid xs={10}>
             <Accordion>
                 <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
                 >
-                <Typography>How this app works</Typography>
+                <Typography >How this app works</Typography>
                 </AccordionSummary>
 
                 <AccordionDetails>
@@ -36,27 +38,27 @@ import Grid from '@mui/material/Unstable_Grid2';
                         <TimelineDot />
                         <TimelineConnector />
                         </TimelineSeparator>
-                        <TimelineContent>Upload CSV file</TimelineContent>
+                        <TimelineContent sx={{flex: '10'}}>Upload CSV file</TimelineContent>
                     </TimelineItem>
                     <TimelineItem>
                         <TimelineSeparator>
                         <TimelineDot />
                         <TimelineConnector />
                         </TimelineSeparator>
-                        <TimelineContent>Add your priceLists</TimelineContent>
+                        <TimelineContent sx={{flex: '10'}}>Add your priceLists</TimelineContent>
                     </TimelineItem>
                     <TimelineItem>
                         <TimelineSeparator>
                         <TimelineDot />
                         <TimelineConnector />
                         </TimelineSeparator>
-                        <TimelineContent>Match product from CSV to the pricelists ID</TimelineContent>
+                        <TimelineContent sx={{flex: '10'}}>Match product from CSV to the pricelists ID</TimelineContent>
                     </TimelineItem>
                     <TimelineItem>
                         <TimelineSeparator>
                         <TimelineDot />
                         </TimelineSeparator>
-                        <TimelineContent>Use as you will!</TimelineContent>
+                        <TimelineContent sx={{flex: '10'}}>Use as you will!</TimelineContent>
                     </TimelineItem>
                 </Timeline>
                 </AccordionDetails>
@@ -91,11 +93,11 @@ import Grid from '@mui/material/Unstable_Grid2';
                 </AccordionSummary>
                 <AccordionDetails>
                 <Typography>
-                    CSV have to be table with file fields: Name, SKU, weight (number), width (number), height (number), depth(number).
+                    CSV have to be table with <strong>exact</strong> file fields: Name, SKU, weight (number), width (number), height (number), depth(number).
                     <br />
-                    You can add example here:
+                    You can download example here:
                     <br />
-                    <a href='../' download>Click to download</a>
+                    <a href={url} download>Click to download</a>
                 </Typography>
                 </AccordionDetails>
             </Accordion>

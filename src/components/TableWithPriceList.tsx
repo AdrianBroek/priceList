@@ -504,6 +504,8 @@ export default function EnhancedTable() {
   }
 
   return (
+    <>
+    {priceTable.length > 0 ? 
     <Container maxWidth="xl" sx={{margin: '2rem auto'}}>
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
@@ -683,12 +685,10 @@ export default function EnhancedTable() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      {/* <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      /> */}
     </Box>
     </Container>
+    :""}
+    </>
   );
 }
 

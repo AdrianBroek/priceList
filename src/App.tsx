@@ -68,7 +68,7 @@ function App() {
       <div className="App">
         <ResponsiveAppBar />
         <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<HomePage />} ></Route>
+          <Route path="/" element={<HomePage />} ></Route>
           <Route path='/how-to' element={<HowTo />}></Route>
         </Routes>
       </div>

@@ -55,6 +55,7 @@ function ResponsiveAppBar() {
               fontWeight: 700,
               color: 'inherit',
               textDecoration: 'none',
+              cursor: "pointer"
             }}
           >
             PriceListApp
@@ -117,21 +118,25 @@ function ResponsiveAppBar() {
               letterSpacing: '.0rem',
               color: 'inherit',
               textDecoration: 'none',
+              cursor: "pointer"
             }}
           >
             PriceListApp
           </Typography>
+          
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={()=>navigate('/how-to')}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
               </Button>
             ))}
+            <ModeSwitch />
           </Box>
+          
 
           <Box sx={{ flexGrow: 0 }}>
             {/* <Tooltip title="Open settings">
@@ -139,6 +144,7 @@ function ResponsiveAppBar() {
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip> */}
+            
             <GoogleAuth />
             {/* <Menu
               sx={{ mt: '45px' }}

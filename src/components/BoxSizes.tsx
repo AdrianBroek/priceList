@@ -9,7 +9,7 @@ import { AdditionalType } from './types/AdditionalType';
 import { IconButton } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { setAdditionalSizes } from '../store/additionalSizesReducer';
-import sizesImage from '../images/Sizes2.png'
+import sizesImage from '../images/boxSizes.png'
 import { relative } from 'path';
 
 const BoxSizes = () => {
@@ -61,13 +61,13 @@ const BoxSizes = () => {
 
                 <Grid xs={12}spacing={2}>
                     <InputSize className='size-a'>
-                        <TextField type='number' onChange={inputHandler} focused value={inputs.sizeA} id="size-a-input" label="SizeA"  variant="outlined" />
+                        <TextField type='number' onChange={inputHandler} focused value={inputs.sizeA} id="size-a-input" label="add-height"  variant="outlined" />
                     </InputSize>
                     <InputSize className='size-b'>
-                        <TextField type='number' onChange={inputHandler} focused value={inputs.sizeB} id="size-b-input" label="SizeB"  variant="outlined" />
+                        <TextField type='number' onChange={inputHandler} focused value={inputs.sizeB} id="size-b-input" label="add-width"  variant="outlined" />
                     </InputSize>
                     <InputSize className='size-c'>
-                        <TextField type='number' onChange={inputHandler} focused value={inputs.sizeC} id="size-c-input" label="SizeC"  variant="outlined" />
+                        <TextField type='number' onChange={inputHandler} focused value={inputs.sizeC} id="size-c-input" label="add-depth"  variant="outlined" />
                     </InputSize>
                     {/* <IconButton size="small" id="title" onClick={()=>dispatch(setAdditionalSizes(inputs))} aria-label="check">
                         <CheckIcon />

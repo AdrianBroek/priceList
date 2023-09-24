@@ -42,8 +42,8 @@ const MatchArea = () => {
                 // }
                 
                 // gabaryty + dodatkowy rozmiar
-                let width = product.width + sizeA
-                let height = product.height + sizeB
+                let width = product.width + sizeB
+                let height = product.height + sizeA
                 let depth = product.depth + sizeC
 
                 let prodArea: number = 0;

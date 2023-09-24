@@ -88,9 +88,6 @@ const ProudctList = () => {
         rows.push(createData(product.title, product.id, product.weight, product.width, product.height, product.depth))
     })
 
-    // console.log(rows)
-    
-    // console.log(productList)
     // mui
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -125,6 +122,8 @@ const ProudctList = () => {
 
 
     return (
+      <>
+      {productList.length > 0 ? 
       <Container maxWidth="xl" sx={{margin: '2rem auto'}}>
       <Box
         sx={{
@@ -181,7 +180,10 @@ const ProudctList = () => {
       </Paper>
       </Box>
       </Container>
-    );
+    
+     : <></>}
+    </>
+    )
 }
 
 export default ProudctList
