@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { styled } from "styled-components";
 import { Product } from "./types/Product";
@@ -12,6 +12,9 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MatchedProductsTable from "./MatchedProductsTable";
+
+import BoxAnimIcon from '../images/barcode.gif'
+import BoxIcon from '../images/box-white.png'
 
 
 const MatchArea = () => {
@@ -84,15 +87,27 @@ const MatchArea = () => {
         }
     }
 
+    // hover button effect
+    const [hover, setHover] = useState(false)
+
     return (
         <Container maxWidth="xl" sx={{margin: '2rem auto'}}>
             <Box sx={{ 
                 // maxHeight: '250px',
             }}>
               <Button 
+              onMouseEnter={()=>setHover(true)}
+              onMouseLeave={()=>setHover(false)}
               sx={{margin: '0 auto 3rem'}}
               onClick={()=>matchProductsToPriceList()} 
-              variant="contained">Match products to priceList
+              variant="text">
+                Match products to pricelists
+                <ImageContainer>
+                    <div>
+                        <img width="70px" src={hover ? BoxAnimIcon : BoxIcon} />
+                    </div>
+                </ImageContainer>
+                
               </Button>
             </Box>
             <Box>
@@ -105,6 +120,18 @@ const MatchArea = () => {
 }
 
 export default MatchArea
+
+
+const ImageContainer = styled.div`
+    margin-left: .5rem;
+    div {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        border-radius: 50%;
+        overflow: hidden;
+        width: 70px;
+        height: 70px;
+    }
+`
 
 
 

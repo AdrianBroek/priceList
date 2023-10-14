@@ -7,14 +7,14 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import GoogleAuth from '../components/googleAuth';
 import ModeSwitch from '../components/modeSwitch';
 import { useNavigate } from "react-router-dom";
+import styled from 'styled-components';
+import logoIcon from '../images/package.png'
 
 const pages = ['How-to'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -42,7 +42,10 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+          <LogoIcon>
+            <img width="35px" src={logoIcon} />
+          </LogoIcon>
           <Typography
             variant="h6"
             noWrap
@@ -103,7 +106,10 @@ function ResponsiveAppBar() {
               <ModeSwitch />
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
+          <LogoIconMobile>
+            <img width="35px" src={logoIcon} />
+          </LogoIconMobile>
           <Typography
             variant="h5"
             noWrap
@@ -175,3 +181,33 @@ function ResponsiveAppBar() {
   );
 }
 export default ResponsiveAppBar;
+
+const LogoIcon = styled.div`
+    @media screen and (max-width: 900px){
+        display: none;
+    }
+    margin-right: -3.5px;
+    margin-top: 7px;
+    div {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        border-radius: 50%;
+        overflow: hidden;
+        width: 70px;
+        height: 70px;
+    }
+`
+
+const LogoIconMobile = styled.div`
+  @media screen and (min-width: 900px){
+      display: none;
+  }
+    margin-right: -7px;
+    margin-top: 7px;
+    div {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        border-radius: 50%;
+        overflow: hidden;
+        width: 70px;
+        height: 70px;
+    }
+`
