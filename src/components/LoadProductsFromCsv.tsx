@@ -41,6 +41,8 @@ const LoadProductsFromCsv = () => {
     }
   };
 
+  
+
   const fileInputDragDrop = (e: React.DragEvent<HTMLInputElement> | any) => {
     // e.preventDefault();
     // console.log(e.target.files[0])
@@ -48,6 +50,7 @@ const LoadProductsFromCsv = () => {
 
   useEffect(() => {
     if (loadedItems.length > 0) {
+      // console.log(loadedItems)
       const newArray: Product[] = []
       loadedItems.forEach((prod: Product, index: number) => {
         const newObj: Product = { ...prod };
@@ -63,7 +66,11 @@ const LoadProductsFromCsv = () => {
           newObj.height = 0;
         }
         if (typeof prod.weight === 'string' && prod.weight !== '') {
-          newObj.weight = parseFloat(prod.weight);
+          const pWeight:string = prod.weight
+          const convertedWeight:string | number = parseFloat(pWeight.replace(/,/g, '.'))
+
+          newObj.weight = convertedWeight;
+
         } else {
           newObj.weight = 0;
         }
@@ -72,7 +79,7 @@ const LoadProductsFromCsv = () => {
         } else {
           newObj.depth = 0;
         }
-        // console.log(newObj)
+        
         newArray.push(newObj)
 
         if(index == loadedItems.length - 1) {

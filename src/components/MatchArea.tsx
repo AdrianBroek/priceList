@@ -19,8 +19,9 @@ const MatchArea = () => {
     const {productList} = useAppSelector((state:any)=> state.products)
     const productsWithPrice = useAppSelector((state:any) => state.productsWithPrice)
     const {sizeA, sizeB, sizeC} = useAppSelector(state => state.additional.sizes)
-    const productsArray: ProductsWithPriceList[] = []
     const dispatch = useAppDispatch()
+
+    const productsArray: ProductsWithPriceList[] = []
 
     // match products and add them to row state
     function matchProductsToPriceList(){
@@ -28,8 +29,12 @@ const MatchArea = () => {
         if(productList){
             // petla na kazdy produkt
             productList.map((product:Product)=> {
-              // if product have sku
-              if(product.id){
+              // if product have sku && dimensions !=0
+              if(product.id
+                && product.width
+                && product.height
+                && product.weight
+                && product.depth){
                 // oblicz pp produktu
 
                 // 200mm dla każdego boku, bo paczki są mniej więcej tak pakowane
@@ -47,6 +52,7 @@ const MatchArea = () => {
                 let depth = product.depth + sizeC
 
                 let prodArea: number = 0;
+
                 if(depth && width && height){
                     prodArea = 2 * (depth * width + depth * height + width * height)
                 }
@@ -81,7 +87,7 @@ const MatchArea = () => {
     return (
         <Container maxWidth="xl" sx={{margin: '2rem auto'}}>
             <Box sx={{ 
-                    // maxHeight: '250px',
+                // maxHeight: '250px',
             }}>
               <Button 
               sx={{margin: '0 auto 3rem'}}
