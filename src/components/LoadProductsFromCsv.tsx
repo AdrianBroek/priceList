@@ -120,8 +120,9 @@ const LoadProductsFromCsv = () => {
             </div>
           :
             // <p>Upload CSV file</p>
-            <IconButton sx={{fontSize: '.9rem', fontWeight: 500}} aria-label="upload">
+            <IconButton  aria-label="upload">
               <Typography
+                sx={{fontSize: '.8rem', fontWeight: 500}}
                 noWrap
               >
                 Upload CSV file

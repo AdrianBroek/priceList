@@ -4,8 +4,18 @@ import { useSelector } from "react-redux";
 // types
 import {ProductsWithPriceList} from './types/ProductsWithPrice'
 import { SinglePriceListArea } from "./types/SinglePriceList";
+
+// options
+import CopyOption from "./CopyOption";
+
 // mui
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import SettingsIcon from '@mui/icons-material/Settings';
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
 interface TableHeadColumns {
     id: 'title' | 'id' | 'weight' | 'width' | 'height' | 'depth' | 'priceListId'
@@ -27,8 +37,20 @@ type TableHeadColumn  = {
     tableHeadColumn: TableHeadColumns[];
 }
 
+// for modal
+const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
 export const TableHeadComponent = ({sort, tableHeadColumn}: Sort & TableHeadColumn) => {
-    
     return (
         <TableHead>
             {tableHeadColumn && (
@@ -57,6 +79,11 @@ const MatchedProductsTable = () => {
         {id: 'depth', label: 'depth',sorted: false, selected: false},
         {id: 'priceListId', label: 'Pricelist ID',sorted: false, selected: false},
     ])
+
+    // modal
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     function sort(id: 'id' | 'title' | 'weight' | 'width' | 'height' | 'depth' | 'priceListId', sorted:boolean, selected: boolean) {
 
@@ -120,6 +147,12 @@ const MatchedProductsTable = () => {
     return (
         <Container>
             {rows.length > 0 && ( 
+                <>
+                <TableOptions className={theme.mode =='light' ? 'light' : 'dark'}>
+                <IconButton onClick={handleOpen} aria-label="options">
+                    <SettingsIcon />
+                </IconButton>
+                </TableOptions>
                 <Matchedtable className={theme.mode =='light' ? 'light' : 'dark'}>
                     <TableHeadComponent 
                     sort={sort} 
@@ -139,8 +172,24 @@ const MatchedProductsTable = () => {
                         </>
                     ))}
                 </Matchedtable>
+                </>
                 )}
-
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography variant="h6" component="h2">
+                    Table options
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Copy all the SKU's to your clipboard from chosen pricelist ID           
+                    </Typography>
+                    <CopyOption />
+                </Box>
+            </Modal>
         </Container>
     )
 }
@@ -215,4 +264,8 @@ const TableHead = styled.div `
             }
         }
     }
+`
+
+const TableOptions = styled.div`
+    
 `

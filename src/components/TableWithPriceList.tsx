@@ -290,6 +290,11 @@ export default function EnhancedTable() {
   const { priceTable } = useSelector((state: any) => state.priceList);
   const [rows, setRows] = React.useState<Data[]>([])
   
+
+  React.useMemo(()=> {
+    setRowsPerPage(priceTable.length) 
+  },[priceTable])
+
     React.useEffect(()=> {
       const mappedRows = priceTable.map((price: Data)=> ({
         id: price.id,
