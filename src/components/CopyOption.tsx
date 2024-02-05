@@ -26,7 +26,7 @@ const CopyOption = () => {
     const [activeTableWithSemicolon, setActiveTableSemicolon] = useState<String>()
 
     const makeSkuCopyObject = useMemo(()=> {
-        console.log(activeTableWithSemicolon)
+        // console.log(activeTableWithSemicolon)
         copyToClipboard(activeTableWithSemicolon)
     }, [activeTableWithSemicolon])
 

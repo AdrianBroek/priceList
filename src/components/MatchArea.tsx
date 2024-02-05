@@ -95,20 +95,23 @@ const MatchArea = () => {
             <Box sx={{ 
                 // maxHeight: '250px',
             }}>
-              <Button 
-              onMouseEnter={()=>setHover(true)}
-              onMouseLeave={()=>setHover(false)}
-              sx={{margin: '0 auto 3rem'}}
-              onClick={()=>matchProductsToPriceList()} 
-              variant="text">
-                Match products to pricelists
-                <ImageContainer>
-                    <div>
-                        <img width="70px" src={hover ? BoxAnimIcon : BoxIcon} />
-                    </div>
-                </ImageContainer>
-                
-              </Button>
+                {productList.length > 0 && (
+                    <Button 
+                    onMouseEnter={()=>setHover(true)}
+                    onMouseLeave={()=>setHover(false)}
+                    sx={{margin: '0 auto 3rem'}}
+                    onClick={()=>matchProductsToPriceList()} 
+                    variant="text">
+                        Match products to pricelists
+                        <ImageContainer>
+                            <div>
+                                <img width="70px" src={hover ? BoxAnimIcon : BoxIcon} />
+                            </div>
+                        </ImageContainer>
+                    
+                    </Button>
+                )}
+
             </Box>
             <Box>
                 {productsWithPrice && (

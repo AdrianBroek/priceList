@@ -17,6 +17,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
+// components
+import PriceListInfoPopover from "./PriceListInfoPopover";
+import { useAppSelector } from "../hooks";
+
 interface TableHeadColumns {
     id: 'title' | 'id' | 'weight' | 'width' | 'height' | 'depth' | 'priceListId'
     label: string,
@@ -50,7 +54,7 @@ const style = {
     p: 4,
   };
 
-export const TableHeadComponent = ({sort, tableHeadColumn}: Sort & TableHeadColumn) => {
+const TableHeadComponent = ({sort, tableHeadColumn}: Sort & TableHeadColumn) => {
     return (
         <TableHead>
             {tableHeadColumn && (
@@ -167,10 +171,14 @@ const MatchedProductsTable = () => {
                                 <TableRow>{product.height}</TableRow>
                                 <TableRow>{product.weight}</TableRow>
                                 <TableRow>{product.depth}</TableRow>
-                                <TableRow>{product.priceListId}</TableRow>
+                                <TableRow>
+                                    {product.priceListId}
+                                    <PriceListInfoPopover priceId={product.priceListId}/>
+                                </TableRow>
                             </Table>
                         </>
                     ))}
+                    
                 </Matchedtable>
                 </>
                 )}

@@ -6,6 +6,7 @@ export interface SinglePriceList {
     width: number;
     depth: number;
     quantity: number;
+    [key: string]: number | string;
 }
 
 export interface SinglePriceListArea extends SinglePriceList {
