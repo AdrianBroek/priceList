@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/priceList/static/css/main.073c9b0a.css",
-    "main.js": "/priceList/static/js/main.5884a201.js",
-    "static/js/787.b6aa1d0d.chunk.js": "/priceList/static/js/787.b6aa1d0d.chunk.js",
+    "main.css": "/priceList/static/css/main.f855e6bc.css",
+    "main.js": "/priceList/static/js/main.abb0ad30.js",
+    "static/js/592.979ad667.chunk.js": "/priceList/static/js/592.979ad667.chunk.js",
     "static/media/barcode.gif": "/priceList/static/media/barcode.cf5817266335f39f217a.gif",
     "static/media/box-white.png": "/priceList/static/media/box-white.1e522ade2c5db7f28521.png",
     "static/media/boxSizes.png": "/priceList/static/media/boxSizes.13f1b1318fde1bfb2d6f.png",
     "static/media/package.png": "/priceList/static/media/package.d3802c7f5d24587ddce2.png",
     "index.html": "/priceList/index.html",
-    "main.073c9b0a.css.map": "/priceList/static/css/main.073c9b0a.css.map",
-    "main.5884a201.js.map": "/priceList/static/js/main.5884a201.js.map",
-    "787.b6aa1d0d.chunk.js.map": "/priceList/static/js/787.b6aa1d0d.chunk.js.map"
+    "main.f855e6bc.css.map": "/priceList/static/css/main.f855e6bc.css.map",
+    "main.abb0ad30.js.map": "/priceList/static/js/main.abb0ad30.js.map",
+    "592.979ad667.chunk.js.map": "/priceList/static/js/592.979ad667.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.5884a201.js"
+    "static/css/main.f855e6bc.css",
+    "static/js/main.abb0ad30.js"
   ]
 }

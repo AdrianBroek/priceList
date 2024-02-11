@@ -5,8 +5,6 @@ https://github.com/mholt/PapaParse
 License: MIT
 */
 
-/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
-
 /**
  * @license
  * Copyright 2017 Google LLC
@@ -197,7 +195,7 @@ License: MIT
  */
 
 /**
- * @mui/styled-engine v5.14.10
+ * @mui/styled-engine v5.15.9
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -205,7 +203,7 @@ License: MIT
  */
 
 /**
- * @remix-run/router v1.9.0
+ * @remix-run/router v1.15.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -216,7 +214,7 @@ License: MIT
  */
 
 /**
- * React Router v6.16.0
+ * React Router v6.22.0
  *
  * Copyright (c) Remix Software Inc.
  *
