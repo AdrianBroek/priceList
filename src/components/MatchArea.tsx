@@ -38,34 +38,28 @@ const MatchArea = () => {
                 && product.height
                 && product.weight
                 && product.depth){
-                // oblicz pp produktu
-
-                // 200mm dla każdego boku, bo paczki są mniej więcej tak pakowane
-                let additional = 50
-
-                // // dla podtynkowych itemów
-                // if(product.title.includes('Podtynkowa')
-                // || product.title.includes('podtynkowa')){
-                //     additional = 70
-                // }
                 
                 // gabaryty + dodatkowy rozmiar
                 let width = product.width + sizeB
                 let height = product.height + sizeA
                 let depth = product.depth + sizeC
 
+                // oblicz pp produktu
                 let prodArea: number = 0;
-
                 if(depth && width && height){
                     prodArea = 2 * (depth * width + depth * height + width * height)
                 }
-                // jesli cennik w state
+                // jesli cennik w state && istnieje area
                 if(priceTable && prodArea){
                     // posortuj wszystkie cenniki i umiesc je w zmiennej
                     const sortedData: SinglePriceListArea[] = [...priceTable].sort((a, b) => a.area - b.area);
                     // dla kazdego produktu zapetl kazdy cennik
                     for (const item of sortedData) {
-                        if (prodArea < item.area && product.weight < item.weight) {
+                        if (prodArea < item.area && product.weight < item.weight
+                            && product.width < item.width
+                            && product.height < item.height
+                            && product.depth < item.depth
+                            ) {
                             productsArray.push({
                                 id: product.id,
                                 title: product.title,
