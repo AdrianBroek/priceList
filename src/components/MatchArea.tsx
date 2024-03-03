@@ -48,17 +48,19 @@ const MatchArea = () => {
                 let prodArea: number = 0;
                 if(depth && width && height){
                     prodArea = 2 * (depth * width + depth * height + width * height)
+                    // prodArea = prodArea / 100;
                 }
                 // jesli cennik w state && istnieje area
                 if(priceTable && prodArea){
                     // posortuj wszystkie cenniki i umiesc je w zmiennej
                     const sortedData: SinglePriceListArea[] = [...priceTable].sort((a, b) => a.area - b.area);
                     // dla kazdego produktu zapetl kazdy cennik
-                    for (const item of sortedData) {
-                        if (prodArea < item.area && product.weight < item.weight
-                            && product.width < item.width
-                            && product.height < item.height
-                            && product.depth < item.depth
+                    for (const priceL of sortedData) {
+                        if (prodArea < priceL.area 
+                            && product.weight < priceL.weight
+                            && product.width < priceL.width && product.width < priceL.height && product.width < priceL.depth
+                            && product.height < priceL.width && product.height < priceL.height && product.height < priceL.depth
+                            && product.depth < priceL.width && product.depth < priceL.height && product.depth < priceL.depth
                             ) {
                             productsArray.push({
                                 id: product.id,
@@ -67,7 +69,7 @@ const MatchArea = () => {
                                 height: product.height,
                                 weight: product.weight,
                                 depth: product.depth,
-                                priceListId: item.id,
+                                priceListId: priceL.id,
                             });
                             break;
                         }

@@ -4,9 +4,9 @@ import { AdditionalType } from "../components/types/AdditionalType";
 
 const initialState: AdditionalType = {
     sizes: {
-        sizeA: 50,
-        sizeB: 50,
-        sizeC: 50
+        sizeA: 100,
+        sizeB: 100,
+        sizeC: 100
     }
 
 }

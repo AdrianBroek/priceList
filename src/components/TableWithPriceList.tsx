@@ -129,7 +129,7 @@ const headCells: readonly HeadCell[] = [
       id: 'area',
       numeric: true,
       disablePadding: false,
-      label: 'area',
+      label: 'area cm2',
     },
     {
       id: 'width',
@@ -583,7 +583,7 @@ export default function EnhancedTable() {
                     </TableCell>
 
                     <TableCell align="right">
-                    {row.area}
+                    {row.area/100}
                     </TableCell>
                     <TableCell 
                     style={edit.active && edit.activeRow == row.id && edit.activeField != "width"? {pointerEvents: "none"} : {pointerEvents: 'all'}} sx={{ position: 'relative' }} id="width" onClick={()=>editInputHandlerClick(row.id, "width")} align="right">
