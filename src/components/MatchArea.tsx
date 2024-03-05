@@ -56,19 +56,21 @@ const MatchArea = () => {
                     const sortedData: SinglePriceListArea[] = [...priceTable].sort((a, b) => a.area - b.area);
                     // dla kazdego produktu zapetl kazdy cennik
                     for (const priceL of sortedData) {
-                        if (prodArea < priceL.area 
+                        if (
+                            // pole powierzchni mniejsze niz cennika
+                            prodArea < priceL.area 
+                            // waga produktu < waga cennika
                             && product.weight < priceL.weight
-                            && product.width < priceL.width && product.width < priceL.height && product.width < priceL.depth
-                            && product.height < priceL.width && product.height < priceL.height && product.height < priceL.depth
-                            && product.depth < priceL.width && product.depth < priceL.height && product.depth < priceL.depth
+                            // maksymalny gabaryt produktu < maksymalny gabaryt cennika
+                            && Math.max(depth, width, depth, height) < Math.max(priceL.depth, priceL.width, priceL.depth, priceL.height)
                             ) {
                             productsArray.push({
                                 id: product.id,
                                 title: product.title,
-                                width: product.width,
-                                height: product.height,
+                                width: width,
+                                height: height,
                                 weight: product.weight,
-                                depth: product.depth,
+                                depth: depth,
                                 priceListId: priceL.id,
                             });
                             break;
