@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Papa from 'papaparse'
-import { fetchProductsSuccess } from '../store/productSlice';
-import { useDispatch } from 'react-redux';
+import { fetchProductsSuccess, fetchProductFromUser, resetProducts } from '../store/productSlice';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { Product } from './types/Product';
 import styled from "@emotion/styled";
 // modal mui
@@ -13,9 +13,11 @@ import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 const LoadProductsFromCsv = () => {
+  const userData = useAppSelector((state) => state.userData)
   const [loadedItems, setLoadedItems] = useState<Product[]>([])
   const [prodList, setProdList] = useState<Product[]>([])
-  const dispatch = useDispatch()
+  const [prodList2, setProdList2] = useState<Product[] | any>([])
+  const dispatch = useAppDispatch()
   const [fileName, setFileName] = useState<String>('')
   // modal state
   const [open, setOpen] = React.useState(false);
@@ -35,7 +37,7 @@ const LoadProductsFromCsv = () => {
       setFileName(event.target.files[0].name)
       // console.log(event.target.files[0].type)
     
-      console.log(event.target.files[0])
+      // console.log(event.target.files[0])
     }else{
       return setOpen(true)
     }
@@ -96,9 +98,59 @@ const LoadProductsFromCsv = () => {
 
   useEffect(()=> {
     if(prodList.length > 0){
+      // console.log(prodList)
       dispatch(fetchProductsSuccess(prodList))
     }
   },[prodList])
+
+
+  // add products to firebase
+  function addProductsToUser(){
+    if(prodList.length > 0){
+    const databaseURL = "https://tester-a7ca6-default-rtdb.europe-west1.firebasedatabase.app"
+    const path = `/userId/${userData.id}/productList.json`; // Ścieżka do danych w bazie
+      fetch(databaseURL+path, {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'Application'
+        },
+        body: JSON.stringify(prodList)
+      })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parsuj odpowiedź JSON
+      })
+      .then((data) => {
+        // console.log('Zaktualizowane dane:', data);
+      })
+      .catch((error) => {
+        console.error('Błąd aktualizacji danych:', error);
+      });
+    }
+  }
+
+  // add products to firebase
+  useEffect(()=>{ 
+    if(userData.logged && prodList.length > 0) {
+      addProductsToUser()
+      // console.log('dodano produkty nowe do fireb')
+    }
+  },[prodList])
+
+
+    // receive data from firebase after logged user
+    useEffect(()=> {
+      if(userData.logged){
+        dispatch(fetchProductFromUser(userData.id))
+        setFileName('product list from database')
+      }else if (!userData.logged) {
+        // reset file after user logout
+        dispatch(resetProducts())
+        setFileName('')
+      }
+  }, [userData])
 
   const theme = useSelector((state: any) => state.theme)
 

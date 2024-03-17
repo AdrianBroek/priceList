@@ -78,7 +78,7 @@ const PriceList = () => {
     function insertPriceListToDB() {
         if(userData){
           const databaseURL = 'https://tester-a7ca6-default-rtdb.europe-west1.firebasedatabase.app';
-          const path = `/userId/${userData.id}.json`; // Ścieżka do danych w bazie
+          const path = `/userId/${userData.id}/priceList.json`; // Ścieżka do danych w bazie
 
           fetch(databaseURL + path,{
             method: "PUT",
@@ -138,7 +138,7 @@ const PriceList = () => {
     useEffect(()=> {
         if(userData.logged && priceTable.length == 0){
             const promise = async () => {
-                return await dispatch(fetchPriceList(`https://tester-a7ca6-default-rtdb.europe-west1.firebasedatabase.app/userId/${userData.id}.json`))
+                return await dispatch(fetchPriceList(`https://tester-a7ca6-default-rtdb.europe-west1.firebasedatabase.app/userId/${userData.id}/priceList.json`))
 
             }
             const promiseLoaded = async() => {

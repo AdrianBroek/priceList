@@ -1,4 +1,3 @@
-
 import { useDispatch, useSelector } from "react-redux";
 import productSlice, { fetchProductsSuccess } from "../store/productSlice"
 import React, {useState, useEffect } from "react";
@@ -83,8 +82,8 @@ const ProudctList = () => {
 
     const rows: Data[] = []
 
-    const rowsMaking = productList.forEach((product: any) => {
-        // console.log(product.title)
+    const rowsMaking = productList?.forEach((product: any) => {
+        // console.log(product)
         rows.push(createData(product.title, product.id, product.weight, product.width, product.height, product.depth))
     })
 
@@ -135,9 +134,9 @@ const ProudctList = () => {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                {columns.map((column) => (
+                {columns.map((column, index) => (
                   <TableCell
-                    key={column.id}
+                    key={index}
                     align={column.align}
                     style={{ minWidth: column.minWidth }}
                   >
@@ -151,7 +150,7 @@ const ProudctList = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1}>
+                    <TableRow key={row.id} hover role="checkbox" tabIndex={-1}>
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (

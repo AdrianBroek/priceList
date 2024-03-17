@@ -2,19 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import {increment, decrement} from './store/counterSlice'
-import ProudctList from './components/productList';
-import PriceList from './components/priceList';
-import MatchArea from './components/MatchArea';
-import EnhancedTable from './components/TableWithPriceList';
-import CSVReader from './components/LoadProductsFromCsv';
-import Box from '@mui/material/Box';
 import { ThemeProvider, useTheme, createTheme } from '@mui/material/styles';
 import { amber, deepOrange, grey } from '@mui/material/colors';
 import { PaletteMode, Switch } from '@mui/material';
-import Login from './components/testAuth';
 import { auth } from './firebase';
-import GoogleAuth from './components/googleAuth';
-import BoxSizes from './components/BoxSizes';
 import ResponsiveAppBar from './layout/appBar';
 import { Routes , Route, useLocation } from "react-router-dom";
 import HomePage from './layout/HomePage';
@@ -30,7 +21,7 @@ function App() {
     };
 
     useEffect(()=> {
-      console.log(user)
+      // console.log(user)
     }, [user])
     
     const getDesignTokens = (mode: PaletteMode) => ({

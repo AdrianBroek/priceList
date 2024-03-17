@@ -1,7 +1,19 @@
 // counterSlice.js
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { Product } from '../components/types/Product';
 
+export const fetchProductFromUser = createAsyncThunk(
+    'products/fetchProductFromUser',
+    async(userId: number | string, thunkAPI)=>{
+        const databaseURL = "https://tester-a7ca6-default-rtdb.europe-west1.firebasedatabase.app"
+        const path = `/userId/${userId}/productList.json`; // Ścieżka do danych w bazie
+        // const res = await fetch("https://jsonplaceholder.typicode.com/todos/1")
+        const res = await fetch(databaseURL+path)
+        const items = await res.json()
+        // console.log(items)
+        return items;
+    }
+)
 
 interface ProductState {
     productList: Product[];
@@ -23,10 +35,26 @@ const productSlice = createSlice({
         fetchProductsSuccess: (state, action: PayloadAction<Product[]>) => {
             state.productList = action.payload;
         },
-
+        resetProducts: (state) => {
+            state.productList = initialState.productList;
+        }
+    },
+    extraReducers: (builder) => {
+        builder
+        .addCase(fetchProductFromUser.pending, (state)=>{
+            // console.log('pending')
+        })
+        .addCase(fetchProductFromUser.fulfilled,(state, action: any)=>{
+            // console.log('fulfilled')
+            // console.log(action.payload)
+            state.productList = action.payload;
+        })
+        .addCase(fetchProductFromUser.rejected, (state)=> {
+            // console.log('rejected')
+        })
     }
 })
 
 
-export const { fetchProductsSuccess } = productSlice.actions;
+export const { fetchProductsSuccess, resetProducts } = productSlice.actions;
 export default productSlice.reducer;

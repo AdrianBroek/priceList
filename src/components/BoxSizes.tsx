@@ -24,7 +24,7 @@ const BoxSizes = () => {
     })
 
     useEffect(()=> {
-        console.log(inputs)
+        // console.log(inputs)
         dispatch(setAdditionalSizes(inputs))
     }, [inputs])
 

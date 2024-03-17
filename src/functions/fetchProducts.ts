@@ -66,10 +66,3 @@ const fetchProduct = async () => {
     
 
 export default fetchProduct
-
-
-// petla na kazdy produkt
-// sprawdz czy gabaryty produktow pasuja do opdowiednich cennikow
-// przypisz sku produktu do odpowiedniego cennikea
-// dodaj ten produkt do jakiejs zmiennej ktora bedzie tabela
-// i w zasadzie tyle
