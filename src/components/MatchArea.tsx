@@ -93,7 +93,7 @@ const MatchArea = () => {
             <Box sx={{ 
                 // maxHeight: '250px',
             }}>
-                {productList.length > 0 && (
+                {productList != null && productList.length > 0 && (
                     <Button 
                     onMouseEnter={()=>setHover(true)}
                     onMouseLeave={()=>setHover(false)}

@@ -7,10 +7,8 @@ export const fetchProductFromUser = createAsyncThunk(
     async(userId: number | string, thunkAPI)=>{
         const databaseURL = "https://tester-a7ca6-default-rtdb.europe-west1.firebasedatabase.app"
         const path = `/userId/${userId}/productList.json`; // Ścieżka do danych w bazie
-        // const res = await fetch("https://jsonplaceholder.typicode.com/todos/1")
         const res = await fetch(databaseURL+path)
         const items = await res.json()
-        // console.log(items)
         return items;
     }
 )

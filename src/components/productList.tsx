@@ -122,7 +122,7 @@ const ProudctList = () => {
 
     return (
       <>
-      {productList.length > 0 ? 
+      {productList!=null && productList.length > 0  ? 
       <Container maxWidth="xl" sx={{margin: '2rem auto'}}>
       <Box
         sx={{
