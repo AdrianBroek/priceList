@@ -11,8 +11,13 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import AlertComponent from "./Alert";
 
-const CopyOption = () => {
+const CopyOption = ({activeTableWithSemicolon, setActiveTableSemicolon}:
+    {
+        activeTableWithSemicolon: string | null,
+        setActiveTableSemicolon: (value: string | null)=> void
+    }) => {
 
     const productsWithPrice = useAppSelector(state=> state.productsWithPrice)
     const {data} = useAppSelector(state=> state.priceListToUser)
@@ -23,12 +28,11 @@ const CopyOption = () => {
         id: ""
     }])
 
-    const [activeTableWithSemicolon, setActiveTableSemicolon] = useState<String>()
 
     const makeSkuCopyObject = useMemo(()=> {
         // console.log(activeTableWithSemicolon)
         copyToClipboard(activeTableWithSemicolon)
-    }, [activeTableWithSemicolon])
+    }, [activeTableWithSemicolon,data])
 
     interface SingleProductTable {
         id: string;
@@ -60,11 +64,11 @@ const CopyOption = () => {
     return (
         <>
             <Button
-            sx={{ m: 1, minWidth: 120 }}
-            onClick={()=>pickTableId(copyId)} 
-            variant="outlined" 
-            startIcon={<ContentCopyIcon />}>
-            Copy SKU's
+                sx={{ m: 1, minWidth: 120 }}
+                onClick={()=>pickTableId(copyId)} 
+                variant="outlined" 
+                startIcon={<ContentCopyIcon />}>
+                    Copy SKU's
             </Button>
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
             <InputLabel id="demo-select-small-label">Pricelist ID</InputLabel>
@@ -76,7 +80,7 @@ const CopyOption = () => {
                 onChange={handleChange}
             >
                 <MenuItem value="0">
-                <em>None</em>
+                    <em>None</em>
                 </MenuItem>
                 {data.length > 0 ? data.map((pricelist:SinglePriceList) => (
                     <MenuItem value={pricelist.id}>{pricelist.id}</MenuItem>))
@@ -84,6 +88,9 @@ const CopyOption = () => {
                 }
             </Select>
             </FormControl>
+            {/* {activeTableWithSemicolon && (
+                <AlertComponent text='Copied to clickboard' type='info'/>
+            )} */}
         </>
     )
 }

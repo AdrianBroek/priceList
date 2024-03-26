@@ -6,11 +6,9 @@ import Grid from '@mui/material/Unstable_Grid2';
 import TextField from '@mui/material/TextField';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { AdditionalType } from './types/AdditionalType';
-import { IconButton } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
 import { setAdditionalSizes } from '../store/additionalSizesReducer';
 import sizesImage from '../images/boxSizes.png'
-import { relative } from 'path';
+import WareHouseIMG from '../images/warehouse_09.webp'
 
 const BoxSizes = () => {
     const dispatch = useAppDispatch()
@@ -69,9 +67,6 @@ const BoxSizes = () => {
                     <InputSize className='size-c'>
                         <TextField type='number' onChange={inputHandler} focused value={inputs.sizeC} id="size-c-input" label="add-depth"  variant="outlined" />
                     </InputSize>
-                    {/* <IconButton size="small" id="title" onClick={()=>dispatch(setAdditionalSizes(inputs))} aria-label="check">
-                        <CheckIcon />
-                    </IconButton> */}
                 </Grid>
                 <Grid xs={
                     12
@@ -79,33 +74,12 @@ const BoxSizes = () => {
                 spacing={2}>
                 <BoxSize>
                     <div className="boxImage">
-                        <img src={sizesImage} />
+                        <img src={WareHouseIMG} />
                     </div>
                     
                 </BoxSize>    
-                    {/* <div className='square st'>
-                        <div className='lane st'></div>
-                        <div className='lane sec'></div>
-                        <div className='lane rd'></div>
-                        <div className='lane th'></div>
-                    </div>
-
-                    <div className='square sec'>
-
-                    </div>
-                    
-                     <div className='lane fifth'></div>
-                    <div className='lane sixth'></div>
-                    <div className='lane seventh'></div>
-                    <div className='lane eighth'></div>
-                    <div className='lane ninth'></div>
-                    <div className='lane tenth'></div>  */}
-
-                
                 </Grid>
             </Grid>
-            
-                
             </Box>
         </Container >
     )

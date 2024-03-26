@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {memo} from 'react';
 import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -53,12 +53,12 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-export default function ModeSwitch() {
+const ModeSwitch = () => {
     const dispatch = useDispatch()
     const {mode} = useSelector((state: any) => state.theme)
 
     const handleChange = () => {
-        console.log(mode)
+        // console.log(mode)
         mode == 'light' ? dispatch(themeDark()) : dispatch(themeLight())
     }
     return (
@@ -74,3 +74,5 @@ export default function ModeSwitch() {
         />
     );
 }
+
+export default memo(ModeSwitch)

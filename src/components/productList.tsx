@@ -76,7 +76,7 @@ interface Column {
     return { title, id, weight, width, height, depth };
   }
 
-const ProudctList = () => {
+const ProductList = () => {
     const dispatch = useDispatch()
     const productList = useSelector((state: any) => state.products.productList)
 
@@ -185,4 +185,4 @@ const ProudctList = () => {
     )
 }
 
-export default ProudctList
+export default ProductList

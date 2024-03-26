@@ -1,4 +1,4 @@
-import ProudctList from '../components/productList';
+import ProductList from '../components/productList';
 import PriceList from '../components/priceList';
 import MatchArea from '../components/MatchArea';
 import EnhancedTable from '../components/TableWithPriceList';
@@ -9,7 +9,7 @@ const HomePage = () => {
     return (
         <>
             <CSVReader />
-            <ProudctList />
+            <ProductList />
             <PriceList />
             <EnhancedTable />
             <BoxSizes />

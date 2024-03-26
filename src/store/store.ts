@@ -11,6 +11,7 @@ import userReducer from './userSlice'
 import importPriceListReducer from './fetchPriceListSlice'
 
 import additionalSizesReducer from './additionalSizesReducer'
+import alertReducer from './alertSlice'
 
 const store = configureStore({
   reducer: {
@@ -21,7 +22,8 @@ const store = configureStore({
     theme: themeReducer,
     userData: userReducer,
     priceListToUser: importPriceListReducer,
-    additional: additionalSizesReducer
+    additional: additionalSizesReducer,
+    alert: alertReducer
   },
 });
 

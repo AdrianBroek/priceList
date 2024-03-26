@@ -71,7 +71,11 @@ const TableHeadComponent = ({sort, tableHeadColumn}: Sort & TableHeadColumn) => 
     )
 }
 
-const MatchedProductsTable = () => {
+const MatchedProductsTable = ({activeTableWithSemicolon, setActiveTableSemicolon}
+    : {
+        activeTableWithSemicolon: string | null,
+        setActiveTableSemicolon: (value: string | null)=> void
+    }) => {
     const productsWithPrice = useSelector((state:any) => state.productsWithPrice)
     const [rows, setRows] = useState<ProductsWithPriceList[]>([])
     const [tableHeadColumn, setTableHeadColumn] = useState<TableHeadColumns[]>([
@@ -195,7 +199,9 @@ const MatchedProductsTable = () => {
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                         Copy all the SKU's to your clipboard from chosen pricelist ID           
                     </Typography>
-                    <CopyOption />
+                    <CopyOption 
+                    activeTableWithSemicolon={activeTableWithSemicolon}
+                    setActiveTableSemicolon={setActiveTableSemicolon}/>
                 </Box>
             </Modal>
         </Container>

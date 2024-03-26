@@ -4,7 +4,7 @@ import { ProductsWithPriceList } from "../components/types/ProductsWithPrice";
 const initialState: ProductsWithPriceList[] = []
 
 const productsWithPriceSlice = createSlice({
-    name: "test",
+    name: "productWithPrice",
     initialState,
     reducers: {
         addProductsWithPrice: (state, action: PayloadAction<ProductsWithPriceList[]>) => {

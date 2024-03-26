@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import './App.css';
-import {increment, decrement} from './store/counterSlice'
 import { ThemeProvider, useTheme, createTheme } from '@mui/material/styles';
 import { amber, deepOrange, grey } from '@mui/material/colors';
 import { PaletteMode, Switch } from '@mui/material';
@@ -10,15 +8,13 @@ import ResponsiveAppBar from './layout/appBar';
 import { Routes , Route, useLocation } from "react-router-dom";
 import HomePage from './layout/HomePage';
 import HowTo from './layout/HowTo';
+import ProductListPage from './layout/ProductListPage';
+import AlertContainer from './layout/AlerContainer';
 
 function App() {
     const dispatch = useDispatch();
-    const counter = useSelector((state:any) => state.counter.value);
     const user = auth.currentUser;
     const location = useLocation()
-    const handleIncrement = () => {
-      dispatch(increment());
-    };
 
     useEffect(()=> {
       // console.log(user)
@@ -37,7 +33,7 @@ function App() {
                 secondary: grey[800],
               },
               background: {
-                default: grey[200],
+                
               },
             }
           : {
@@ -56,10 +52,12 @@ function App() {
 
     return (
       <ThemeProvider theme={theme}>
+      <AlertContainer />
       <div className="App">
         <ResponsiveAppBar />
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<HomePage />} ></Route>
+          <Route path="/product-list" element={<ProductListPage />} ></Route>
           <Route path='/how-to' element={<HowTo />}></Route>
         </Routes>
       </div>
