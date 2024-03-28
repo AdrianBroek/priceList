@@ -7,11 +7,10 @@ import { useAppSelector } from "../hooks";
 const AlertContainer = () => {
     const {alertList} = useAppSelector(state => state.alert);
 
-    console.log(alertList)
     return (
         <Container>
             {alertList.map((alert)=> (
-                <AlertComponent text={alert.text} type={alert.type}/>
+                <AlertComponent key={alert.id} text={alert.text} type={alert.type} id={alert.id}/>
             ))}
         </Container>
     )
@@ -25,8 +24,8 @@ const Container = styled.section`
     align-items: end;
     justify-content: end;
     flex-direction: column;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
 `

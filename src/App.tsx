@@ -52,7 +52,6 @@ function App() {
 
     return (
       <ThemeProvider theme={theme}>
-      <AlertContainer />
       <div className="App">
         <ResponsiveAppBar />
         <Routes location={location} key={location.pathname}>
@@ -60,7 +59,9 @@ function App() {
           <Route path="/product-list" element={<ProductListPage />} ></Route>
           <Route path='/how-to' element={<HowTo />}></Route>
         </Routes>
+        <AlertContainer />
       </div>
+      
       </ThemeProvider>
     );
 }

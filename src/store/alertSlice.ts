@@ -24,11 +24,9 @@ const alertSlice = createSlice({
                 ...action.payload
             ]
         },
-        clearAlert: (state, action: PayloadAction<AlertType>) => {
-            return {
-                ...state,
-                alertList: state.alertList.filter((alert: AlertType) => alert.id !== action.payload.id)
-            };
+        clearAlert: (state, action: PayloadAction<any>) => {
+            let id = action.payload
+            state.alertList = state.alertList.filter((alert: AlertType) => alert.id !== id);
         }
     }
 })
