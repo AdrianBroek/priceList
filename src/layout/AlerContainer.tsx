@@ -24,8 +24,8 @@ const Container = styled.section`
     align-items: end;
     justify-content: end;
     flex-direction: column;
-    right: 0;
-    bottom: 0;
+    right: 5px;
+    bottom: .5%;
     width: auto;
     height: auto;
 `

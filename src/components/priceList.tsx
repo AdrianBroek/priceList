@@ -175,12 +175,12 @@ const PriceList = () => {
                     > 
                     <h2>Crate new pricelist:</h2>
                         <div>
-                        <TextField required id="title" label="Title" variant="filled" onChange={inputHandler} type="text" placeholder="nazwa" />
-                        <TextField required id="weight" label="weight" variant="filled" onChange={inputHandler} type="number" placeholder="maks waga" />
-                        <TextField required id="height" label="height" variant="filled" onChange={inputHandler} type="number" placeholder="wysokosc" />
-                        <TextField required id="width" label="width" variant="filled" onChange={inputHandler} type="number" placeholder="szerokosc" />
-                        <TextField required id="depth" label="depth" variant="filled" onChange={inputHandler} type="number" placeholder="głębokość" />
-                        <TextField required id="quantity" label="quantity" variant="filled" onChange={inputHandler} type="text" placeholder="Ilość elementów w paczce" />
+                        <TextField required id="title" label="Title" variant="filled" onChange={inputHandler} type="text" placeholder="custom pricelist name" />
+                        <TextField required id="weight" label="weight" variant="filled" onChange={inputHandler} type="number" placeholder="maximum product weigth" />
+                        <TextField required id="height" label="height" variant="filled" onChange={inputHandler} type="number" placeholder="maximum product height" />
+                        <TextField required id="width" label="width" variant="filled" onChange={inputHandler} type="number" placeholder="maximum product width" />
+                        <TextField required id="depth" label="depth" variant="filled" onChange={inputHandler} type="number" placeholder="maximum product depth" />
+                        <TextField required id="quantity" label="quantity" variant="filled" onChange={inputHandler} type="text" placeholder="Product quantity in package" />
                         </div>
                         <Button sx={{margin: '1rem'}} type="submit" variant="contained" endIcon={<AddIcon />}>
                             Add pricelist

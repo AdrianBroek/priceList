@@ -20,7 +20,7 @@ const CopyOption = ({activeTableWithSemicolon, setActiveTableSemicolon}:
 
     const productsWithPrice = useAppSelector(state=> state.productsWithPrice)
     const {data} = useAppSelector(state=> state.priceListToUser)
-
+        
     const makeSkuCopyObject = useMemo(()=> {
         // console.log(activeTableWithSemicolon)
         copyToClipboard(activeTableWithSemicolon)

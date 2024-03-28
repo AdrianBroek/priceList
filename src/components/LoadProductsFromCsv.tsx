@@ -139,7 +139,6 @@ const LoadProductsFromCsv = () => {
     }
   },[prodList])
 
-
     // receive data from firebase after logged user
     useEffect(()=> {
       if(userData.logged){

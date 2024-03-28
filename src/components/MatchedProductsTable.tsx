@@ -281,5 +281,7 @@ const TableHead = styled.div `
 `
 
 const TableOptions = styled.div`
-    
+    display: flex;
+    justify-content: end;
+    margin: auto 0 auto auto;
 `
