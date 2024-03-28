@@ -17,13 +17,13 @@ const AlertComponent = ({text, type,id}: {
 
   const dispatch = useAppDispatch();
 
-  // useEffect(()=> {
-  //   const timer = setTimeout(()=> {
-  //     setChecked(false);
-  //   },5000);
-  //   // cleanup effect with clearTimeout
-  //   return () => clearTimeout(timer);
-  // },[]);
+  useEffect(()=> {
+    const timer = setTimeout(()=> {
+      setChecked(false);
+    },5000);
+    // cleanup effect with clearTimeout
+    return () => clearTimeout(timer);
+  },[]);
 
   const deleteAlert = () => {
     setChecked(false);
