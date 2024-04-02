@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface AlertType {
-    text: string;
+    text: string | undefined;
     type: string;
     id: number | string;
 }

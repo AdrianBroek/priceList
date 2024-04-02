@@ -8,8 +8,8 @@ import { useAppDispatch } from '../hooks';
 import { clearAlert } from '../store/alertSlice';
 
 
-const AlertComponent = ({text, type,id}: {
-    text: string,
+const AlertComponent = ({text, type, id}: {
+    text: string | undefined,
     type: string | undefined,
     id: any, 
 }) => {

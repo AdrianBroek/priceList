@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import logoIcon from '../images/package.png'
 
-const pages = ['How-to', 'Product-list'];
+const pages = ['How-to', 'Product-list', 'Contact'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -96,6 +96,9 @@ function ResponsiveAppBar() {
                 </MenuItem>
                 <MenuItem onClick={handleCloseNavMenu}>
                   <Typography onClick={()=>navigate('/product-list')} textAlign="center">Product List</Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography onClick={()=>navigate('/contact')} textAlign="center">Contact</Typography>
                 </MenuItem>
               <ModeSwitch />
             </Menu>

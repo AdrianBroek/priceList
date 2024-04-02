@@ -10,6 +10,7 @@ import HomePage from './layout/HomePage';
 import HowTo from './layout/HowTo';
 import ProductListPage from './layout/ProductListPage';
 import AlertContainer from './layout/AlerContainer';
+import ContactForm from './layout/ContactPage';
 
 function App() {
     const dispatch = useDispatch();
@@ -58,6 +59,7 @@ function App() {
           <Route path="/" element={<HomePage />} ></Route>
           <Route path="/product-list" element={<ProductListPage />} ></Route>
           <Route path='/how-to' element={<HowTo />}></Route>
+          <Route path='/contact' element={<ContactForm />}></Route>
         </Routes>
         <AlertContainer />
       </div>
