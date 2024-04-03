@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAppSelector, useAppDispatch } from '../hooks'
 import { addPriceList, removePriceList } from "../store/priceSlice";
 import { fetchPriceList } from "../actions/fetchPriceListData";
+import { v4 as uuidv4 } from "uuid";
 // types
 import { SinglePriceList, SinglePriceListArea } from "./types/SinglePriceList";
 // mui
@@ -14,6 +15,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import AddIcon from '@mui/icons-material/Add';
+import { callAlert } from "../store/alertSlice";
+
 
 const PriceList = () => {
     const dispatch = useAppDispatch()
@@ -123,7 +126,8 @@ const PriceList = () => {
                     area: parseFloat(((2 * (input.depth * input.width + input.depth * input.height + input.width * input.height)) / input.quantity).toFixed(2))
                 }
             ]
-            dispatch(addPriceList(newPriceTable))   
+            dispatch(addPriceList(newPriceTable))
+            dispatch(callAlert([{text: "Successfully added new pricelist.", type: "success", id:uuidv4()}]))
         }
     }
 

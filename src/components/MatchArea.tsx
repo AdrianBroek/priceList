@@ -1,12 +1,12 @@
-import React, { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useMemo, useState } from "react";
 import { styled } from "styled-components";
 import { Product } from "./types/Product";
-import { SinglePriceList, SinglePriceListArea } from "./types/SinglePriceList";
+import { SinglePriceListArea } from "./types/SinglePriceList";
 import { ProductsWithPriceList } from "./types/ProductsWithPrice";
-import { useDispatch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { addProductsWithPrice } from "../store/productsWithPriceSlice";
+import { callAlert } from "../store/alertSlice";
+import {v4 as uuidv4} from 'uuid';
 // mui
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -83,6 +83,7 @@ const MatchArea = () => {
                 // po przypisaniu produktow z cennikami
                 // wyslij produkty do state
                 dispatch(addProductsWithPrice(productsArray))
+                dispatch(callAlert([{text: "Successfully added matched your products.", type: "success", id:uuidv4()}]))
             }
         };
     }, [productList, sizeA, sizeB, sizeC]);
@@ -113,11 +114,6 @@ const MatchArea = () => {
                 )}
 
             </Box>
-            {/* <Box>
-                {productsWithPrice && (
-                    <MatchedProductsTable />
-                )}
-            </Box> */}
         </Container>
     )
 }

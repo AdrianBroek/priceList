@@ -49,8 +49,8 @@ const ContactForm = () => {
     } = useForm<Inputs>({
         defaultValues: {
             email: userData.email !== "" ? userData?.email : "e-mail@domain.com",
-            firstName: userData.displayName !== "" ? userData?.displayName.split(" ")[0] : "Name",
-            lastName:  userData.displayName !== "" ? userData?.displayName.split(" ")[1] : "Name",
+            firstName: userData.displayName !== "" ? userData?.displayName.split(" ")[0] : "First Name",
+            lastName:  userData.displayName !== "" ? userData?.displayName.split(" ")[1] : "Last Name",
         }
     })
 
@@ -126,7 +126,7 @@ const ContactForm = () => {
                             pattern: /^[A-Z][a-zżóźćęą]+$/,
                             minLength: {
                                 value: 5,
-                                message: "First name mu have at least 5 chars."
+                                message: "First name must have at least 5 chars."
                             }
                         })}/>
                     </Item>
@@ -146,7 +146,7 @@ const ContactForm = () => {
                             pattern: /^[A-Z][a-zżóźćęą]+$/,
                             minLength: {
                                 value: 2,
-                                message: "Last name mu have at least 2 chars."
+                                message: "Last name must have at least 2 chars."
                             }
                         })}/>  
                     </Item>
@@ -236,7 +236,7 @@ const ContactForm = () => {
                     alignItems="center"
                     justifyContent="center"
                     p={0}>
-                        <p style={{color: "#ff0000"}}>{errors.email.message}</p>
+                        <p style={{color: "#ff0000", fontSize: 16}}>{errors.email.message}</p>
                     </Grid>
                 )}
                 {errors.phone?.message && (
@@ -249,7 +249,7 @@ const ContactForm = () => {
                     alignItems="center"
                     justifyContent="center"
                     p={0}>
-                        <p style={{color: "#ff0000"}}>{errors.phone.message}</p>
+                        <p style={{color: "#ff0000", fontSize: 16}}>{errors.phone.message}</p>
                     </Grid>
                 )}
                 <Grid 
@@ -266,7 +266,7 @@ const ContactForm = () => {
                         type="text" {...register("title", {
                             required: "Please provide title of your message",
                             pattern: {
-                                value: /^[A-Z0-9][0-9A-Za-zżóźćęą\s]+$/,
+                                value: /^[A-Z0-9][0-9A-Za-zżóźćęłą\s]+$/,
                                 message: "Your title has to start with great letter and contains only letters and numbers."
                             },
                             minLength: {
@@ -274,11 +274,21 @@ const ContactForm = () => {
                                 message: "Your title has to be at least 5 sumbols"
                             }
                         })}/>
-                        {errors.title && (
-                            <p style={{color: "#ff0000"}}>{errors.title.message}</p>
-                        )}
                     </Item>
                 </Grid>
+                {errors.title?.message && (
+                    <Grid 
+                    height="auto"
+                    xs={12}
+                    sm={12}
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    p={0}>
+                        <p style={{color: "#ff0000"}}>{errors.title.message}</p>
+                    </Grid>
+                )}
 
                 <Grid 
                 item 
@@ -293,7 +303,7 @@ const ContactForm = () => {
                         {...register("content", {
                             required: "Please provide your message",
                             pattern: {
-                                value: /^[A-ZŻÓŹĆĘĄ0-9][a-zżóźćęą\s.,!?0-9]+$/i,
+                                value: /^[A-ZŻÓŹĆĘĄÓŁ0-9\s./:;"'`><~,!?]+$/i,
                                 message: "Your message has to starts with great letter and containt only letters, numbers and symbols."
                             },
                             minLength: {
@@ -301,11 +311,22 @@ const ContactForm = () => {
                                 message: "Your message has to be at least 20 sumbols."
                             }
                         })}/>
-                        {errors.content && (
-                            <p style={{color: "#ff0000"}}>{errors.content?.message}</p>
-                        )}
                     </Item>
+                    
                 </Grid>
+                {errors.content?.message && (
+                    <Grid 
+                    height="auto"
+                    xs={12}
+                    sm={12}
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    p={0}>
+                        <p style={{color: "#ff0000"}}>{errors.content.message}</p>
+                    </Grid>
+                )}
 
                 <Grid 
                 item 

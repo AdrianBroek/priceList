@@ -17,8 +17,6 @@ import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
@@ -31,6 +29,8 @@ import { SinglePriceListArea } from './types/SinglePriceList';
 import { EditInputState } from './types/EditPricelist';
 import CheckIcon from '@mui/icons-material/Check';
 import styled from 'styled-components';
+import {v4 as uuidv4} from 'uuid';
+import { callAlert } from '../store/alertSlice';
 
 interface Data {
     id: number,
@@ -376,9 +376,9 @@ export default function EnhancedTable() {
   ),[order, orderBy, page, rowsPerPage, rows],);
 
   const deleteHandler = () => {
-    // console.log(selected)
     const newArr = [...selected]
     dispatch(removePriceList(newArr))
+    dispatch(callAlert([{text: "Successfully removed chosen pricelist.", type: "success", id:uuidv4()}]))
   }
 
 

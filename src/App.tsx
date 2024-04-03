@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { ThemeProvider, useTheme, createTheme } from '@mui/material/styles';
-import { amber, deepOrange, grey } from '@mui/material/colors';
-import { PaletteMode, Switch } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { grey } from '@mui/material/colors';
+import { PaletteMode } from '@mui/material';
 import { auth } from './firebase';
 import ResponsiveAppBar from './layout/appBar';
 import { Routes , Route, useLocation } from "react-router-dom";
@@ -11,15 +11,13 @@ import HowTo from './layout/HowTo';
 import ProductListPage from './layout/ProductListPage';
 import AlertContainer from './layout/AlerContainer';
 import ContactForm from './layout/ContactPage';
+import GlobalStyles from "@mui/material/GlobalStyles";
+import { useAppSelector } from './hooks';
 
 function App() {
-    const dispatch = useDispatch();
     const user = auth.currentUser;
-    const location = useLocation()
-
-    useEffect(()=> {
-      // console.log(user)
-    }, [user])
+    const location = useLocation();
+    const themeCOLOR = useAppSelector((state)=>state.theme)
     
     const getDesignTokens = (mode: PaletteMode) => ({
       palette: {
@@ -27,14 +25,12 @@ function App() {
         ...(mode === 'light'
           ? {
               // palette values for light mode
-              // primary: amber,
-              // divider: amber[200],
               text: {
                 primary: grey[900],
                 secondary: grey[800],
               },
               background: {
-                
+                default: '#f5f5f5',
               },
             }
           : {
@@ -53,6 +49,11 @@ function App() {
 
     return (
       <ThemeProvider theme={theme}>
+        <GlobalStyles
+        styles={{
+          body: { backgroundColor: themeCOLOR.mode === "light" ? "#f5f5f5" : "#000" }
+        }}
+      />
       <div className="App">
         <ResponsiveAppBar />
         <Routes location={location} key={location.pathname}>

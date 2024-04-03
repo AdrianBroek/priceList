@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { AdditionalType } from './types/AdditionalType';
 import { setAdditionalSizes } from '../store/additionalSizesReducer';
-import sizesImage from '../images/boxSizes.png'
+import Paper from '@mui/material/Paper';
 import WareHouseIMG from '../images/warehouse_09.webp'
 
 const BoxSizes = () => {
@@ -51,8 +51,12 @@ const BoxSizes = () => {
         }
     }
     return (
-        <Container >
-            
+        <Container maxWidth="xl" sx={{margin: '2rem auto', padding: '1rem 0'}}>
+            <Paper sx={{ 
+                height: '100%',
+                margin: 'auto',
+                padding: "2rem 2rem 4rem 2rem"
+            }} >
             <h2>Add a additional sizes to your box [mm]</h2>
             <Box sx={{ flexGrow: 1 , position: 'relative', maxWidth: 700, margin: 'auto'}}>
             <Grid container spacing={2}>
@@ -81,6 +85,7 @@ const BoxSizes = () => {
                 </Grid>
             </Grid>
             </Box>
+            </Paper>
         </Container >
     )
 }
