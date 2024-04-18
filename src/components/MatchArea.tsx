@@ -16,6 +16,8 @@ import MatchedProductsTable from "./MatchedProductsTable";
 import BoxAnimIcon from '../images/barcode.gif'
 import BoxIcon from '../images/box-white.png'
 
+import { checkSizes } from "../functions/checkSizes";
+
 
 const MatchArea = () => {
     const {priceTable} = useAppSelector((state:any)=> state.priceList)
@@ -30,7 +32,7 @@ const MatchArea = () => {
             const productsArray: ProductsWithPriceList[] = []
             // jesli sa produkty w state
             if(productList){
-                console.log(productList.length>0)
+                // console.log(productList.length>0)
                 // petla na kazdy produkt
                 productList.forEach((product:Product)=> {
                     // if product have sku && dimensions !=0
@@ -55,6 +57,7 @@ const MatchArea = () => {
                         if(priceTable && prodArea){
                             // posortuj wszystkie cenniki i umiesc je w zmiennej
                             const sortedData: SinglePriceListArea[] = [...priceTable].sort((a, b) => a.area - b.area);
+                            // console.log(sortedData)
                             // dla kazdego produktu zapetl kazdy cennik
                             for (const priceL of sortedData) {
                                 if (
@@ -63,8 +66,13 @@ const MatchArea = () => {
                                     // waga produktu < waga cennika
                                     && product.weight < priceL.weight
                                     // maksymalny gabaryt produktu < maksymalny gabaryt cennika
-                                    && Math.max(depth, width, depth, height) < Math.max(priceL.depth, priceL.width, priceL.depth, priceL.height)
-                                    ) {
+                                    // && Math.max(depth, width, height) < Math.max(priceL.depth, priceL.width, priceL.height)
+                                    && checkSizes(width, height, depth, priceL)    
+                                ) {
+                                    // console.log(Math.max(depth, width, height))
+                                    // console.log(Math.max(priceL.depth, priceL.width, priceL.height))
+                                    
+
                                     productsArray.push({
                                         id: product.id,
                                         title: product.title,
