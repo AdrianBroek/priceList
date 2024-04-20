@@ -105,11 +105,11 @@ const ContactForm = () => {
 
     return (
         
-        <Container maxWidth="sm">
+        <Container maxWidth="sm" sx={{marginTop: '5rem'}}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+            <Paper elevation={2} sx={{marginBottom: 10, paddingTop: 2}}>
             <h1>Contact form</h1>
             <p>Saw some errors? Have a questions? Please tell us about it!</p>
-            <form onSubmit={handleSubmit(onSubmit)}>
-            <Paper elevation={2} sx={{marginBottom: 10}}>
             <Grid marginTop={10} container spacing={0}>
                 <Grid 
                 xs={12}
@@ -123,7 +123,7 @@ const ContactForm = () => {
                         id="outlined-multiline-static" label="First Name"
                         sx={{width: "100%"}} type="text" {...register("firstName", {
                             required: "First name is required",
-                            pattern: /^[A-Z][a-zżóźćęą]+$/,
+                            pattern: /^[A-ZŁ][a-zżóźćęłąś]+$/,
                             minLength: {
                                 value: 5,
                                 message: "First name must have at least 5 chars."
@@ -143,7 +143,7 @@ const ContactForm = () => {
                         id="outlined-multiline-static" label="Last Name"
                         sx={{width: "100%"}} type="text" {...register("lastName", {
                             required: "Last name is required",
-                            pattern: /^[A-Z][a-zżóźćęą]+$/,
+                            pattern: /^[A-ZŁŻ][a-zżóźćęłąś]+$/,
                             minLength: {
                                 value: 2,
                                 message: "Last name must have at least 2 chars."

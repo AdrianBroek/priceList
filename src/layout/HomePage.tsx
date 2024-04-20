@@ -4,6 +4,7 @@ import MatchArea from '../components/MatchArea';
 import EnhancedTable from '../components/TableWithPriceList';
 import CSVReader from '../components/LoadProductsFromCsv';
 import BoxSizes from '../components/BoxSizes';
+import SortChange from '../components/SortChange';
 
 const HomePage = () => {
     return (
@@ -13,6 +14,7 @@ const HomePage = () => {
             <PriceList />
             <EnhancedTable />
             <BoxSizes />
+            <SortChange />
             <MatchArea />
         </>
     )

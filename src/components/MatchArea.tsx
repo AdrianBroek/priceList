@@ -22,6 +22,7 @@ import { checkSizes } from "../functions/checkSizes";
 const MatchArea = () => {
     const {priceTable} = useAppSelector((state:any)=> state.priceList)
     const {productList} = useAppSelector((state:any)=> state.products)
+    const {value} = useAppSelector((state) => state.sort)
     const productsWithPrice = useAppSelector((state:any) => state.productsWithPrice)
     const {sizeA, sizeB, sizeC} = useAppSelector(state => state.additional.sizes)
     const dispatch = useAppDispatch()
@@ -56,8 +57,20 @@ const MatchArea = () => {
                         // jesli cennik w state && istnieje area
                         if(priceTable && prodArea){
                             // posortuj wszystkie cenniki i umiesc je w zmiennej
-                            const sortedData: SinglePriceListArea[] = [...priceTable].sort((a, b) => a.area - b.area);
-                            // console.log(sortedData)
+                            const sortedData: SinglePriceListArea[] = [...priceTable].sort((a, b) => {
+                                // Dynamically access the property based on the value from Redux state
+                                const aValue = a[value];
+                                const bValue = b[value];
+                              
+                                // Perform comparison based on the accessed property
+                                if (aValue < bValue) {
+                                  return -1;
+                                } else if (aValue > bValue) {
+                                  return 1;
+                                } else {
+                                  return 0;
+                                }
+                              });
                             // dla kazdego produktu zapetl kazdy cennik
                             for (const priceL of sortedData) {
                                 if (

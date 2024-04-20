@@ -13,6 +13,8 @@ import importPriceListReducer from './fetchPriceListSlice'
 import additionalSizesReducer from './additionalSizesReducer'
 import alertReducer from './alertSlice'
 
+import sortReducer from './sortReducer';
+
 const store = configureStore({
   reducer: {
     counter: counterReducer,
@@ -23,7 +25,8 @@ const store = configureStore({
     userData: userReducer,
     priceListToUser: importPriceListReducer,
     additional: additionalSizesReducer,
-    alert: alertReducer
+    alert: alertReducer,
+    sort: sortReducer
   },
 });
 
