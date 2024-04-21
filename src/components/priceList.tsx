@@ -4,6 +4,8 @@ import { useAppSelector, useAppDispatch } from '../hooks'
 import { addPriceList, removePriceList } from "../store/priceSlice";
 import { fetchPriceList } from "../actions/fetchPriceListData";
 import { v4 as uuidv4 } from "uuid";
+
+import AddId from "../functions/AddId";
 // types
 import { SinglePriceList, SinglePriceListArea } from "./types/SinglePriceList";
 // mui
@@ -105,7 +107,7 @@ const PriceList = () => {
         }
     }
 
-    function addNewPrice(e:React.FormEvent<HTMLFormElement>) {
+    async function addNewPrice(e:React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         if (input.id >= 0 
             && input.title.length > 0 
@@ -113,10 +115,12 @@ const PriceList = () => {
             && input.height > 0 
             && input.width > 0 
             && input.depth > 0 
-            && input.quantity > 0 ){
+            && input.quantity > 0 
+            && priceTable){
             const newPriceTable: SinglePriceListArea[] = [
                 {
-                    id: input.id+=1,
+                    id: AddId(priceTable),
+                    // id: priceTable.length + 1,
                     title: input.title,
                     weight: input.weight,
                     height: input.height,
@@ -126,8 +130,15 @@ const PriceList = () => {
                     area: parseFloat(((2 * (input.depth * input.width + input.depth * input.height + input.width * input.height)) / input.quantity).toFixed(2))
                 }
             ]
-            dispatch(addPriceList(newPriceTable))
-            dispatch(callAlert([{text: "Successfully added new pricelist.", type: "success", id:uuidv4()}]))
+            try {
+                await dispatch(addPriceList(newPriceTable));
+                dispatch(callAlert([{text: "Successfully added new pricelist.", type: "success", id: uuidv4()}]));
+            } catch (error) {
+                // console.error("Error adding pricelist:", error);
+                // Tutaj możesz obsłużyć błąd, np. wyświetlając alert z informacją o błędzie
+                dispatch(callAlert([{text: "Failed to add new pricelist. Please try again later.", type: "error", id: uuidv4()}]));
+            }
+            
         }
     }
 

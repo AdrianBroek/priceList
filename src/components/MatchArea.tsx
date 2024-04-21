@@ -26,14 +26,15 @@ const MatchArea = () => {
     const productsWithPrice = useAppSelector((state:any) => state.productsWithPrice)
     const {sizeA, sizeB, sizeC} = useAppSelector(state => state.additional.sizes)
     const dispatch = useAppDispatch()
+    // console.log(productList)
 
     // match products and add them to row state
     const matchProductsToPriceList = useMemo(() => {
         return () => {
             const productsArray: ProductsWithPriceList[] = []
             // jesli sa produkty w state
-            if(productList){
-                // console.log(productList.length>0)
+            if(!productList.length && !priceTable.length){
+                // console.log(productList)
                 // petla na kazdy produkt
                 productList.forEach((product:Product)=> {
                     // if product have sku && dimensions !=0
@@ -101,13 +102,16 @@ const MatchArea = () => {
                         }
                     }
                 })
+                // console.log(productsArray)
                 // po przypisaniu produktow z cennikami
                 // wyslij produkty do state
                 dispatch(addProductsWithPrice(productsArray))
-                dispatch(callAlert([{text: "Successfully added matched your products.", type: "success", id:uuidv4()}]))
+                dispatch(callAlert([{text: "Successfully matched your products.", type: "success", id:uuidv4()}]))
+            } else {
+                dispatch(callAlert([{text: "Add products and pricelist first", type: "error", id:uuidv4()}]))
             }
         };
-    }, [productList, sizeA, sizeB, sizeC]);
+    }, [productList, sizeA, sizeB, sizeC, priceTable]);
 
     // hover button effect
     const [hover, setHover] = useState(false)
