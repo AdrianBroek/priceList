@@ -120,7 +120,6 @@ const PriceList = () => {
             const newPriceTable: SinglePriceListArea[] = [
                 {
                     id: AddId(priceTable),
-                    // id: priceTable.length + 1,
                     title: input.title,
                     weight: input.weight,
                     height: input.height,

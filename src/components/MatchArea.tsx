@@ -33,8 +33,8 @@ const MatchArea = () => {
         return () => {
             const productsArray: ProductsWithPriceList[] = []
             // jesli sa produkty w state
-            if(!productList.length && !priceTable.length){
-                // console.log(productList)
+            if(productList.length && priceTable.length){
+                
                 // petla na kazdy produkt
                 productList.forEach((product:Product)=> {
                     // if product have sku && dimensions !=0
