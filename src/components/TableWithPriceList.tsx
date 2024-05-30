@@ -293,24 +293,7 @@ export default function EnhancedTable() {
 
   React.useMemo(()=> {
     setRowsPerPage(priceTable.length) 
-  },[priceTable])
-
-    React.useEffect(()=> {
-      const mappedRows = priceTable.map((price: Data)=> ({
-        id: price.id,
-        title: price.title,
-        area: price.area,
-        width: price.width,
-        depth: price.depth,
-        height: price.height,
-        weight: price.weight,
-        quantity: price.quantity,
-      }));
-
-      setRows(mappedRows); 
-      // console.log(rows)
-    }, [priceTable])
-
+  },[priceTable, ])
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -368,12 +351,6 @@ export default function EnhancedTable() {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
-  const visibleRows = React.useMemo(() =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage,
-  ),[order, orderBy, page, rowsPerPage, rows],);
 
   const deleteHandler = () => {
     const newArr = [...selected]
@@ -456,6 +433,7 @@ export default function EnhancedTable() {
   const saveEditInput = (id:number, name:string) => {
     const inputName = name;
     const newValue = editedInputs[inputName];
+    // console.log(newValue)
     const editedPriceTable = priceTable.filter((row:SinglePriceListArea) => row.id === id)[0]
     const prevValue = editedPriceTable[name];
 
@@ -498,15 +476,35 @@ export default function EnhancedTable() {
       activeRow: 0,
       active: false
     }))
-    // recalculate area for edited pricelist
-    const newArea = parseFloat(((2 * (editedPriceTable.depth * editedPriceTable.width + editedPriceTable.depth * editedPriceTable.height + editedPriceTable.width * editedPriceTable.height)) / editedPriceTable.quantity).toFixed(2))
-    editInput = {
-      inputName: 'area',
-      priceId: id,
-      newValue: newArea
-    }
-    dispatch(editPriceListField(editInput))
   }
+  
+
+  const visibleRows = React.useMemo(() =>
+    stableSort(rows, getComparator(order, orderBy)).slice(
+      page * rowsPerPage,
+      page * rowsPerPage + rowsPerPage,
+),[order, orderBy, page, rowsPerPage, rows, saveEditInput],);
+
+
+React.useEffect(()=> {
+  const mappedRows = priceTable.map((price: Data)=> ({
+    id: price.id,
+    title: price.title,
+    area: price.area,
+    width: price.width,
+    depth: price.depth,
+    height: price.height,
+    weight: price.weight,
+    quantity: price.quantity,
+  }));
+
+  setRows(mappedRows); 
+  // console.log(mappedRows)
+}, [priceTable])
+
+React.useEffect(()=> {
+  // console.log('gnow')
+},[edit])
 
   return (
     <>
@@ -646,14 +644,15 @@ export default function EnhancedTable() {
                         : ""
                       }
                     </TableCell>
-                    <TableCell 
-                    style={edit.active && edit.activeRow == row.id && edit.activeField != "quantity"? {pointerEvents: "none"} : {pointerEvents: 'all'}} sx={{ position: 'relative' }} id="quantity" onClick={()=>editInputHandlerClick(row.id, "quantity")} align="right">
-                      <p style={edit.active && edit.activeRow == row.id && edit.activeField == "quantity" ? {visibility: "hidden"} : {fontSize: 'visible'}}>
+                    <TableCell
+                    style={edit.active && edit.activeRow == row.id && edit.activeField != "quantity"? {pointerEvents: "none"} : {pointerEvents: 'all'}}
+                    sx={{ position: 'relative' }} id="quantity" onClick={()=>editInputHandlerClick(row.id, "quantity")} align="right">
+                      <p style={edit.active && edit.activeRow == row.id && edit.activeField == "quantity"? {visibility: "hidden"} : {visibility: 'visible'}}>
                       {row.quantity}
                       </p>
                       {edit.activeRow == row.id && edit.activeField == "quantity" ?
                         <EditedInputField>
-                          <TextField placeholder='new' focused type='text' size="small" id="quantity" onChange={editInputHandler} label={row.quantity} variant="standard" />
+                          <TextField placeholder='new' focused type='number' size="small" id="quantity" onChange={editInputHandler} label={row.quantity} variant="standard" />
                           <IconButton size="small" id="quantity" onClick={(e)=>saveEditInput(row.id,'quantity')} aria-label="check">
                             <CheckIcon />
                           </IconButton>

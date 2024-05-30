@@ -13,18 +13,20 @@ import Button from '@mui/material/Button';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const CopyOption = ({activeTableWithSemicolon, setActiveTableSemicolon}:
-    {
-        activeTableWithSemicolon: string | null,
-        setActiveTableSemicolon: (value: string | null)=> void
-    }) => {
+        {
+            activeTableWithSemicolon: string | null,
+            setActiveTableSemicolon: (value: string | null)=> void
+        }
+    ) => {
 
     const productsWithPrice = useAppSelector(state=> state.productsWithPrice)
-    const {data} = useAppSelector(state=> state.priceListToUser)
-        
+    // const {data} = useAppSelector(state=> state.priceListToUser)
+    const {priceTable} = useAppSelector(state => state.priceList);  
+    
     const makeSkuCopyObject = useMemo(()=> {
         // console.log(activeTableWithSemicolon)
         copyToClipboard(activeTableWithSemicolon)
-    }, [activeTableWithSemicolon,data])
+    }, [activeTableWithSemicolon,priceTable])
 
     interface SingleProductTable {
         id: string;
@@ -70,7 +72,7 @@ const CopyOption = ({activeTableWithSemicolon, setActiveTableSemicolon}:
                 onChange={handleChange}
             >
                 
-                {data.length > 0 ? data.map((pricelist:SinglePriceList) => (
+                {priceTable.length > 0 ? priceTable?.map((pricelist:SinglePriceList) => (
                     <MenuItem key={pricelist.id} value={pricelist.id}>{pricelist.id}</MenuItem>))
                 : <MenuItem value="0">
                 <em>None</em>

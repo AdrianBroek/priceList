@@ -14,7 +14,6 @@ const initialState: PriceListState = {
 export const addPriceList = createAsyncThunk(
     'priceList/addPriceListAsync',
     async (payload: SinglePriceList[]) => {
-        // Tutaj można umieścić logikę obsługi asynchronicznej, np. wywołanie API
         return payload;
     }
 );
@@ -29,9 +28,12 @@ const priceListSlice = createSlice({
         },
         editPriceListField: (state, action: PayloadAction<EditInputState>) => {
             const editedPriceList = action.payload;
+            console.log(state)
             state.priceTable.forEach(price => {
                 if (price.id === editedPriceList.priceId) {
                     price[editedPriceList.inputName] = editedPriceList.newValue;
+                    const newArea = parseFloat(((2 * (price.depth * price.width + price.depth * price.height + price.width * price.height)) / price.quantity).toFixed(2));
+                    price.area = newArea;
                 }
             });
         },

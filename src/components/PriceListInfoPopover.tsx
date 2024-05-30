@@ -33,7 +33,7 @@ export default function PriceListInfoPopover({priceId}: ID) {
   function priselistInfoPopup(){
       const filteredPriceListData = priceTable?.filter((priceList:SinglePriceListArea) => priceList.id == priceId);
       setActivePriceListInfo(filteredPriceListData[0] || null)
-      console.log(activePriceListInfo?.depth)
+      // console.log(activePriceListInfo?.depth)
 
   }
 

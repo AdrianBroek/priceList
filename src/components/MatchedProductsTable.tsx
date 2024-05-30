@@ -167,20 +167,18 @@ const MatchedProductsTable = ({activeTableWithSemicolon, setActiveTableSemicolon
                     tableHeadColumn={tableHeadColumn} 
                     />
                     {rows.map((product:ProductsWithPriceList) => (
-                        <>
-                            <Table className={theme.mode =='light' ? 'light' : 'dark'}>
-                                <TableRow>{product.id}</TableRow>
-                                <TableRow>{product.title}</TableRow>
-                                <TableRow>{product.width}</TableRow>
-                                <TableRow>{product.height}</TableRow>
-                                <TableRow>{product.weight}</TableRow>
-                                <TableRow>{product.depth}</TableRow>
-                                <TableRow>
-                                    {product.priceListId}
-                                    <PriceListInfoPopover priceId={product.priceListId}/>
-                                </TableRow>
-                            </Table>
-                        </>
+                        <Table key={product.id} className={theme.mode =='light' ? 'light' : 'dark'}>
+                            <TableRow>{product.id}</TableRow>
+                            <TableRow>{product.title}</TableRow>
+                            <TableRow>{product.width}</TableRow>
+                            <TableRow>{product.height}</TableRow>
+                            <TableRow>{product.weight}</TableRow>
+                            <TableRow>{product.depth}</TableRow>
+                            <TableRow>
+                                {product.priceListId}
+                                <PriceListInfoPopover priceId={product.priceListId}/>
+                            </TableRow>
+                        </Table>
                     ))}
                     
                 </Matchedtable>

@@ -54,7 +54,7 @@ const ContactForm = () => {
         }
     })
 
-    // firestore db
+    // firestore db get data
     useEffect(()=> {
         onSnapshot(collection(db, "contact-form"),(snapshot)=>{
             // console.log(snapshot.docs.map((doc: any)=> doc.data()))
@@ -303,7 +303,7 @@ const ContactForm = () => {
                         {...register("content", {
                             required: "Please provide your message",
                             pattern: {
-                                value: /^[A-ZŻÓŹĆĘĄÓŁ0-9\s./:;"'`><~,!?]+$/i,
+                                value: /[A-Z][a-zA-Z0-9\s]/,
                                 message: "Your message has to starts with great letter and containt only letters, numbers and symbols."
                             },
                             minLength: {

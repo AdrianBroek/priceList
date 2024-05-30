@@ -72,8 +72,10 @@ const MatchArea = () => {
                                   return 0;
                                 }
                               });
+                            //   console.log(sortedData)
                             // dla kazdego produktu zapetl kazdy cennik
                             for (const priceL of sortedData) {
+                                // console.log(checkSizes(width, height, depth, priceL))
                                 if (
                                     // pole powierzchni mniejsze niz cennika
                                     prodArea < priceL.area 
@@ -83,6 +85,7 @@ const MatchArea = () => {
                                     // && Math.max(depth, width, height) < Math.max(priceL.depth, priceL.width, priceL.height)
                                     && checkSizes(width, height, depth, priceL)    
                                 ) {
+                                    // console.log(checkSizes(width, height, depth, priceL))
                                     // console.log(Math.max(depth, width, height))
                                     // console.log(Math.max(priceL.depth, priceL.width, priceL.height))
                                     
@@ -106,7 +109,11 @@ const MatchArea = () => {
                 // po przypisaniu produktow z cennikami
                 // wyslij produkty do state
                 dispatch(addProductsWithPrice(productsArray))
-                dispatch(callAlert([{text: "Successfully matched your products.", type: "success", id:uuidv4()}]))
+                if(productsArray.length > 0){
+                    dispatch(callAlert([{text: "Successfully matched your products.", type: "success", id:uuidv4()}]))
+                } else {
+                    dispatch(callAlert([{text: "Didn't match products, something went wrong", type: "error", id:uuidv4()}]))
+                }
             } else {
                 dispatch(callAlert([{text: "Add products and pricelist first", type: "error", id:uuidv4()}]))
             }
