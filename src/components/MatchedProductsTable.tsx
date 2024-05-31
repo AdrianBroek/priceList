@@ -55,12 +55,13 @@ const style = {
   };
 
 const TableHeadComponent = ({sort, tableHeadColumn}: Sort & TableHeadColumn) => {
+    const theme = useSelector((state: any) => state.theme)
     return (
-        <TableHead>
+        <TableHead className={theme.mode =='light' ? 'light' : 'dark'}>
             {tableHeadColumn && (
                 <>
                     {tableHeadColumn.map((column) => (
-                        <div onClick={()=>sort(column.id, column.sorted, column.selected)} key={column.id}>
+                        <div onClick={()=>sort(column.id, column.sorted, column.selected)} key={column.id} >
                             {column.sorted ? <ArrowUpwardIcon sx={{ fontSize: 17 }} className={column.selected? 'active' : ""} /> : <ArrowUpwardIcon sx={{ fontSize: 17, transform: 'rotate(-180deg)' }} className={column.selected? 'active' : ""}/>}
                             <p>{column.label}</p>
                         </div>
@@ -228,11 +229,13 @@ const Table = styled.div `
     grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
     width: 100%;
     border-top: 1px solid rgba(81, 81, 81, 1);
+    color: #fff;
     &:hover {
         background-color: rgba(255, 255, 255, 0.08);
     }
     &.light {
         border-top: 1px solid rgba(224, 224, 224, 1);
+        color: #000;
         &:hover {
             background-color: rgba(0, 0, 0, 0.04);
         }
@@ -244,6 +247,7 @@ const TableRow = styled.div `
     justify-content: center;
     width: 100%;
     font-size: 0.875rem;
+    color: inherit;
 `
 
 const TableHead = styled.div `
@@ -254,6 +258,10 @@ const TableHead = styled.div `
     line-height: 1.5rem;
     padding: 0 0 1rem;
     font-weight: 500;
+    color: #fff;
+    &.light {
+        color: #000;
+    }
     div {
         display: flex;
         width: 100%;
