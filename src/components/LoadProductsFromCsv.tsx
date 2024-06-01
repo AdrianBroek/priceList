@@ -139,16 +139,12 @@ const LoadProductsFromCsv = () => {
     }
   },[prodList])
 
-    // receive data from firebase after logged user
-    useEffect(()=> {
-      if(userData.logged){
-        dispatch(fetchProductFromUser(userData.id))
-        setFileName('product list from database')
-      }else if (!userData.logged) {
-        // reset file after user logout
-        dispatch(resetProducts())
-        setFileName('')
-      }
+  // receive data from firebase after logged user
+  useEffect(()=> {
+    if(userData.logged){
+      dispatch(fetchProductFromUser(userData.id))
+      setFileName('product list from database')
+    }
   }, [userData])
 
   const theme = useSelector((state: any) => state.theme)

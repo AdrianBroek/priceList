@@ -187,7 +187,7 @@ const PriceList = () => {
                         autoComplete="off"
                         onSubmit={addNewPrice}
                     > 
-                    <h2>Crate new pricelist:</h2>
+                    <h2>Create new pricelist:</h2>
                         <div>
                         <TextField required id="title" label="Title" variant="filled" onChange={inputHandler} type="text" placeholder="custom pricelist name" />
                         <TextField required id="weight" label="weight" variant="filled" onChange={inputHandler} type="number" placeholder="maximum product weigth" />

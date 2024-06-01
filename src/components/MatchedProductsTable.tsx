@@ -1,6 +1,7 @@
 import React, {useEffect, useMemo, useState} from "react";
 import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 // types
 import {ProductsWithPriceList} from './types/ProductsWithPrice'
 import { SinglePriceListArea } from "./types/SinglePriceList";
@@ -13,9 +14,9 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import SettingsIcon from '@mui/icons-material/Settings';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import Paper from "@mui/material/Paper";
 
 // components
 import PriceListInfoPopover from "./PriceListInfoPopover";
@@ -168,7 +169,7 @@ const MatchedProductsTable = ({activeTableWithSemicolon, setActiveTableSemicolon
                     tableHeadColumn={tableHeadColumn} 
                     />
                     {rows.map((product:ProductsWithPriceList) => (
-                        <Table key={product.id} className={theme.mode =='light' ? 'light' : 'dark'}>
+                        <Table key={uuidv4()} className={theme.mode =='light' ? 'light' : 'dark'}>
                             <TableRow>{product.id}</TableRow>
                             <TableRow>{product.title}</TableRow>
                             <TableRow>{product.width}</TableRow>
@@ -191,7 +192,7 @@ const MatchedProductsTable = ({activeTableWithSemicolon, setActiveTableSemicolon
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <Paper sx={style}>
                     <Typography variant="h6" component="h2">
                     Table options
                     </Typography>
@@ -201,7 +202,7 @@ const MatchedProductsTable = ({activeTableWithSemicolon, setActiveTableSemicolon
                     <CopyOption 
                     activeTableWithSemicolon={activeTableWithSemicolon}
                     setActiveTableSemicolon={setActiveTableSemicolon}/>
-                </Box>
+                </Paper>
             </Modal>
         </Container>
     )

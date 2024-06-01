@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import { getAuth} from 'firebase/auth';
 import { logoutUser } from '../store/userSlice';
 import { resetPriceList } from '../store/priceSlice';
+import { resetProducts } from '../store/productSlice';
 // Avatar
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
@@ -43,6 +44,7 @@ export default function BasicMenu() {
         auth.signOut()
         dispatch(logoutUser())
         dispatch(resetPriceList())
+        dispatch(resetProducts())
         handleClose()
     }
 

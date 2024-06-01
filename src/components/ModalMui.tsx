@@ -28,7 +28,6 @@ export default function BasicModal({open, setOpen}: Open) {
 
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         open={open}
         onClose={handleClose}
