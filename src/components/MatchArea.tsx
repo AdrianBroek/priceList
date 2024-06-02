@@ -78,11 +78,10 @@ const MatchArea = () => {
                                 // console.log(checkSizes(width, height, depth, priceL))
                                 if (
                                     // pole powierzchni mniejsze niz cennika
-                                    prodArea < priceL.area 
+                                    prodArea <= priceL.area 
                                     // waga produktu < waga cennika
-                                    && product.weight < priceL.weight
+                                    && product.weight <= priceL.weight
                                     // maksymalny gabaryt produktu < maksymalny gabaryt cennika
-                                    // && Math.max(depth, width, height) < Math.max(priceL.depth, priceL.width, priceL.height)
                                     && checkSizes(width, height, depth, priceL)    
                                 ) {
                                     // console.log(checkSizes(width, height, depth, priceL))
