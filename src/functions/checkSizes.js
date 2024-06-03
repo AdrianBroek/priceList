@@ -14,10 +14,11 @@ export function checkSizes(width, height, depth, priceList) {
 
     // jesli gabaryty cennika sa takie same
     if(priceListSizes[0] == priceListSizes[1] && priceListSizes[1] == priceListSizes[2]){
+        // console.log(midOfpriceListSizes)
         if(
             maxOfproductSizes < priceListSizes[0] 
             && minOfproductSizes < priceListSizes[0]
-            && midOfproductSizes[0] < priceListSizes[0]
+            && midOfproductSizes < priceListSizes[0]
         ){
             return true;
         } else {
@@ -27,7 +28,7 @@ export function checkSizes(width, height, depth, priceList) {
     } 
     // jesli gabaryty cennika sa rozne
     else {
-        console.log(midOfpriceListSizes)
+        // console.log(midOfpriceListSizes)
         if(
             maxOfproductSizes < maxOfpriceListSizes 
             && minOfproductSizes < minOfpriceListSizes

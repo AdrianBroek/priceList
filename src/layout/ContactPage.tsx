@@ -303,7 +303,7 @@ const ContactForm = () => {
                         {...register("content", {
                             required: "Please provide your message",
                             pattern: {
-                                value: /[A-Z][a-zA-Z0-9\s]/,
+                                value: /[A-ZŁŻŹĆÓĄ][a-zA-Z0-9\s]/,
                                 message: "Your message has to starts with great letter and containt only letters, numbers and symbols."
                             },
                             minLength: {
