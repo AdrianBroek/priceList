@@ -10,6 +10,5 @@ export default function AddId(priceTable) {
     while (usedIds.includes(nextAvailableId)) {
         nextAvailableId++;
     }
-
     return nextAvailableId;
 }

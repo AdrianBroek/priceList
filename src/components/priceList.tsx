@@ -83,7 +83,7 @@ const PriceList = () => {
     function insertPriceListToDB() {
         if(userData){
           const databaseURL = 'https://tester-a7ca6-default-rtdb.europe-west1.firebasedatabase.app';
-          const path = `/userId/${userData.id}/priceList.json`; // Ścieżka do danych w bazie
+          const path = `/userId/${userData.id}/priceList.json`; 
 
           fetch(databaseURL + path,{
             method: "PUT",
@@ -96,13 +96,13 @@ const PriceList = () => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
-            return response.json(); // Parsuj odpowiedź JSON
+            return response.json();
           })
           .then((data) => {
             // console.log('Zaktualizowane dane:', data);
           })
           .catch((error) => {
-            console.error('Błąd aktualizacji danych:', error);
+            console.error('Data update error:', error);
           });
         }
     }
@@ -134,10 +134,11 @@ const PriceList = () => {
                 dispatch(callAlert([{text: "Successfully added new pricelist.", type: "success", id: uuidv4()}]));
             } catch (error) {
                 // console.error("Error adding pricelist:", error);
-                // Tutaj możesz obsłużyć błąd, np. wyświetlając alert z informacją o błędzie
-                dispatch(callAlert([{text: "Failed to add new pricelist. Please try again later.", type: "error", id: uuidv4()}]));
+                dispatch(callAlert([{text: "Failed to add new pricelist. Something went wrong", type: "error", id: uuidv4()}]));
             }
             
+        } else {
+            dispatch(callAlert([{text: "Fill out all input details.", type: "error", id: uuidv4()}]));
         }
     }
 
