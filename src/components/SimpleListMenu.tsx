@@ -10,6 +10,7 @@ import { getAuth} from 'firebase/auth';
 import { logoutUser } from '../store/userSlice';
 import { resetPriceList } from '../store/priceSlice';
 import { resetProducts } from '../store/productSlice';
+import { removeAllExtensions } from '../store/extensionsReducer';
 // Avatar
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
@@ -45,6 +46,7 @@ export default function BasicMenu() {
         dispatch(logoutUser())
         dispatch(resetPriceList())
         dispatch(resetProducts())
+        dispatch(removeAllExtensions())
         handleClose()
     }
 

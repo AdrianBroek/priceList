@@ -15,7 +15,6 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
 import AddIcon from '@mui/icons-material/Add';
 import { callAlert } from "../store/alertSlice";
 
@@ -172,36 +171,36 @@ const PriceList = () => {
             <CssBaseline />
             <Container maxWidth="xl" sx={{margin: '2rem auto'}}>
                 <Box>
-                <Paper sx={{ 
-                    height: '100%',
-                    margin: 'auto',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'center'
-                    }} >
-                    <Box
-                        component="form"
-                        sx={{
-                            '& .MuiTextField-root': { m: 1, width: '25ch' },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                        onSubmit={addNewPrice}
-                    > 
-                    <h2>Create new pricelist:</h2>
-                        <div>
-                        <TextField required id="title" label="Title" variant="filled" onChange={inputHandler} type="text" placeholder="custom pricelist name" />
-                        <TextField required id="weight" label="weight" variant="filled" onChange={inputHandler} type="number" placeholder="maximum product weigth" />
-                        <TextField required id="height" label="height" variant="filled" onChange={inputHandler} type="number" placeholder="maximum product height" />
-                        <TextField required id="width" label="width" variant="filled" onChange={inputHandler} type="number" placeholder="maximum product width" />
-                        <TextField required id="depth" label="depth" variant="filled" onChange={inputHandler} type="number" placeholder="maximum product depth" />
-                        <TextField required id="quantity" label="quantity" variant="filled" onChange={inputHandler} type="text" placeholder="Product quantity in package" />
-                        </div>
-                        <Button sx={{margin: '1rem'}} type="submit" variant="contained" endIcon={<AddIcon />}>
-                            Add pricelist
-                        </Button>
-                    </Box>
-                </Paper>
+                    <Paper sx={{ 
+                        height: '100%',
+                        margin: 'auto',
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center'
+                        }} >
+                        <Box
+                            component="form"
+                            sx={{
+                                '& .MuiTextField-root': { m: 1, width: '25ch' },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            onSubmit={addNewPrice}
+                        > 
+                        <h2>Create new pricelist:</h2>
+                            <div>
+                            <TextField required id="title" label="Title" variant="filled" onChange={inputHandler} type="text" placeholder="custom pricelist name" />
+                            <TextField required id="weight" label="weight" variant="filled" onChange={inputHandler} type="number" placeholder="maximum product weigth" />
+                            <TextField required id="height" label="height" variant="filled" onChange={inputHandler} type="number" placeholder="maximum product height" />
+                            <TextField required id="width" label="width" variant="filled" onChange={inputHandler} type="number" placeholder="maximum product width" />
+                            <TextField required id="depth" label="depth" variant="filled" onChange={inputHandler} type="number" placeholder="maximum product depth" />
+                            <TextField required id="quantity" label="quantity" variant="filled" onChange={inputHandler} type="text" placeholder="Product quantity in package" />
+                            </div>
+                            <Button sx={{margin: '1rem'}} type="submit" variant="contained" endIcon={<AddIcon />}>
+                                Add pricelist
+                            </Button>
+                        </Box>
+                    </Paper>
                 </Box>
             </Container>
         </React.Fragment>

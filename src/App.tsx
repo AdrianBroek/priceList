@@ -13,6 +13,7 @@ import AlertContainer from './layout/AlerContainer';
 import ContactForm from './layout/ContactPage';
 import GlobalStyles from "@mui/material/GlobalStyles";
 import { useAppSelector } from './hooks';
+import GetExtensionsFromDb from './components/ExtensionsFolder/GetExtensionsFromDB';
 
 function App() {
     const user = auth.currentUser;
@@ -56,6 +57,7 @@ function App() {
       />
       <div className="App">
         <ResponsiveAppBar />
+        <GetExtensionsFromDb />
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<HomePage />} ></Route>
           <Route path="/product-list" element={<ProductListPage />} ></Route>

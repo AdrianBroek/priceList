@@ -12,7 +12,7 @@ import importPriceListReducer from './fetchPriceListSlice'
 
 import additionalSizesReducer from './additionalSizesReducer'
 import alertReducer from './alertSlice'
-
+import extensionReducer from './extensionsReducer'
 import sortReducer from './sortReducer';
 
 const store = configureStore({
@@ -26,7 +26,8 @@ const store = configureStore({
     priceListToUser: importPriceListReducer,
     additional: additionalSizesReducer,
     alert: alertReducer,
-    sort: sortReducer
+    sort: sortReducer,
+    extension: extensionReducer
   },
 });
 

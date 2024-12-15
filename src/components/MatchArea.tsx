@@ -22,6 +22,7 @@ import { checkSizes } from "../functions/checkSizes";
 const MatchArea = () => {
     const {priceTable} = useAppSelector((state:any)=> state.priceList)
     const {productList} = useAppSelector((state:any)=> state.products)
+    const {extensionList} = useAppSelector(state=> state.extension)
     const {value} = useAppSelector((state) => state.sort)
     const productsWithPrice = useAppSelector((state:any) => state.productsWithPrice)
     const {sizeA, sizeB, sizeC} = useAppSelector(state => state.additional.sizes)
@@ -37,6 +38,7 @@ const MatchArea = () => {
                 
                 // petla na kazdy produkt
                 productList.forEach((product:Product)=> {
+                    
                     // if product have sku && dimensions !=0
                     if(product.id
                         && product.width
@@ -48,6 +50,22 @@ const MatchArea = () => {
                         let width = product.width + sizeB
                         let height = product.height + sizeA
                         let depth = product.depth + sizeC
+
+                        // check if product exist in exceptionList
+                        if(extensionList.length > 0){
+                            const checkIfInExtensionList = extensionList.filter(el => el.sku == product.id);
+                            if(checkIfInExtensionList.length > 0){ 
+                                return productsArray.push({
+                                    id: product.id,
+                                    title: product.title,
+                                    width: width,
+                                    height: height,
+                                    weight: product.weight,
+                                    depth: depth,
+                                    priceListId: checkIfInExtensionList[0].priceListId,
+                                })
+                            }
+                        }
 
                         // oblicz pp produktu
                         let prodArea: number = 0;
@@ -72,7 +90,7 @@ const MatchArea = () => {
                                   return 0;
                                 }
                               });
-                            //   console.log(sortedData)
+                            // console.log(sortedData)
                             // dla kazdego produktu zapetl kazdy cennik
                             for (const priceL of sortedData) {
                                 // console.log(checkSizes(width, height, depth, priceL))
@@ -117,7 +135,7 @@ const MatchArea = () => {
                 dispatch(callAlert([{text: "Add products and pricelist first", type: "error", id:uuidv4()}]))
             }
         };
-    }, [productList, sizeA, sizeB, sizeC, priceTable]);
+    }, [productList, sizeA, sizeB, sizeC, priceTable, extensionList]);
 
     // hover button effect
     const [hover, setHover] = useState(false)

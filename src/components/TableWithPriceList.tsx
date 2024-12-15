@@ -18,7 +18,6 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -31,6 +30,9 @@ import CheckIcon from '@mui/icons-material/Check';
 import styled from 'styled-components';
 import {v4 as uuidv4} from 'uuid';
 import { callAlert } from '../store/alertSlice';
+import { Extension } from '@mui/icons-material';
+import { setOpenExtension } from '../store/extensionsReducer';
+import Extensions from './ExtensionsFolder/Extensions';
 
 interface Data {
     id: number,
@@ -269,12 +271,13 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
+        <Tooltip title="Excepsions">
+          <IconButton onClick={()=>dispatch(setOpenExtension(true))}>
+            <Extension />
           </IconButton>
         </Tooltip>
       )}
+      
     </Toolbar>
   );
 }
@@ -288,7 +291,8 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const dispatch = useDispatch();
   const { priceTable } = useSelector((state: any) => state.priceList);
-  const [rows, setRows] = React.useState<Data[]>([])
+  const [rows, setRows] = React.useState<Data[]>([]);
+  const {openExtensions, extensionList} = useSelector((state: any) => state.extension);
   
 
   React.useMemo(()=> {
@@ -676,6 +680,7 @@ React.useEffect(()=> {
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
+              {openExtensions ? <Extensions /> : ""}
             </TableBody>
           </Table>
         </TableContainer>
