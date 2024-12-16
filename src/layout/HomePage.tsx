@@ -5,12 +5,13 @@ import EnhancedTable from '../components/TableWithPriceList';
 import CSVReader from '../components/LoadProductsFromCsv';
 import BoxSizes from '../components/BoxSizes';
 import SortChange from '../components/SortChange';
+import DataTable from '../components/TableWithProducts';
 
 const HomePage = () => {
     return (
         <>
             <CSVReader />
-            <ProductList />
+            <DataTable />
             <PriceList />
             <EnhancedTable />
             <BoxSizes />

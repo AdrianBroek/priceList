@@ -1,8 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import productSlice, { fetchProductsSuccess } from "../store/productSlice"
 import React, {useState, useEffect } from "react";
-import fetchProduct from "../functions/fetchProducts";
-import { Product } from "./types/Product";
 import Box from '@mui/material/Box';
 // mui
 import Container from '@mui/material/Container';

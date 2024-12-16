@@ -65,20 +65,20 @@ const CopyOption = ({activeTableWithSemicolon, setActiveTableSemicolon}:
                     Copy SKU's
             </Button>
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel>Pricelist ID</InputLabel>
-            <Select
-                value={copyId}
-                label="copyId"
-                onChange={handleChange}
-            >
-                
-                {priceTable.length > 0 ? priceTable?.map((pricelist:SinglePriceList) => (
-                    <MenuItem key={pricelist.id} value={pricelist.id}>{pricelist.id}</MenuItem>))
-                : <MenuItem value="0">
-                <em>None</em>
-                </MenuItem>
-                }
-            </Select>
+                <InputLabel>Pricelist ID</InputLabel>
+                <Select
+                    value={copyId}
+                    label="copyId"
+                    onChange={handleChange}
+                >
+                    {priceTable.length > 0 ? priceTable?.map((pricelist:SinglePriceList) => (
+                        <MenuItem key={pricelist.id} value={pricelist.id}>{pricelist.id}</MenuItem>))
+                    : 
+                    <MenuItem value="0">
+                        <em>None</em>
+                    </MenuItem>
+                    }
+                </Select>
             </FormControl>
         </>
     )
