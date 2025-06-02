@@ -23,6 +23,7 @@
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@types/react-redux": "^7.1.25",
+    "chance": "^1.1.12",
     "firebase": "^10.3.1",
     "papaparse": "^5.4.1",
     "react": "^18.2.0",
@@ -33,6 +34,7 @@
     "react-router": "^6.16.0",
     "react-router-dom": "^6.16.0",
     "react-scripts": "^5.0.1",
+    "react-virtuoso": "^4.12.5",
     "styled-components": "^6.0.7",
     "three": "^0.156.1",
     "typescript": "^4.9.5",
@@ -68,6 +70,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/chance": "^1.1.6",
     "@types/three": "^0.156.0",
     "@types/uuid": "^9.0.8",
     "gh-pages": "^6.0.0"

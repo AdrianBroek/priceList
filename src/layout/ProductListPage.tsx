@@ -27,7 +27,7 @@ const ProductListPage = () => {
                     <MatchedProductsTable 
                     activeTableWithSemicolon={activeTableWithSemicolon}
                     setActiveTableSemicolon={setActiveTableSemicolon} />
-                ):<p>A list of products matching the price list will appear here.</p>}
+                ):<p>A list of products with an assigned price list will appear here.</p>}
             </Box>
         </Container>
     )
