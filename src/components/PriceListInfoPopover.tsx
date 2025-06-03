@@ -8,7 +8,7 @@ import { useAppSelector } from "../hooks";
 import { SinglePriceListArea } from "./types/SinglePriceList";
 
 type ID = {
-    priceId: number;
+  priceId: number;
 }
 
 export default function PriceListInfoPopover({priceId}: ID) {

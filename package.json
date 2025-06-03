@@ -1,5 +1,5 @@
 {
-  "homepage": "http://AdrianBroek.github.io/priceList",
+  "homepage": "https://adrianBroek.github.io/priceList",
   "name": "cennik",
   "version": "0.1.0",
   "private": true,
@@ -44,7 +44,7 @@
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d build -r https://github.com/adrianBroek/priceList.git",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

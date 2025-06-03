@@ -6,10 +6,8 @@ import {
     DataGrid, 
     GridToolbarContainer,
     GridColDef, 
-    GridToolbar,
     GridToolbarExport,
     GridToolbarFilterButton,
-
 } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import Modal from '@mui/material/Modal';
