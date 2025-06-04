@@ -16,7 +16,6 @@ import { useAppSelector } from './hooks';
 import GetExtensionsFromDb from './components/ExtensionsFolder/GetExtensionsFromDB';
 
 function App() {
-    const user = auth.currentUser;
     const location = useLocation();
     const themeCOLOR = useAppSelector((state)=>state.theme)
     
