@@ -14,9 +14,9 @@ import Typography from '@mui/material/Typography';
 
 const LoadProductsFromCsv = () => {
   const userData = useAppSelector((state) => state.userData)
+  const {productList} = useAppSelector((state) => state.products)
   const [loadedItems, setLoadedItems] = useState<Product[]>([])
   const [prodList, setProdList] = useState<Product[]>([])
-  const [prodList2, setProdList2] = useState<Product[] | any>([])
   const dispatch = useAppDispatch()
   const [fileName, setFileName] = useState<String>('')
   // modal state
@@ -143,9 +143,12 @@ const LoadProductsFromCsv = () => {
   useEffect(()=> {
     if(userData.logged){
       dispatch(fetchProductFromUser(userData.id))
-      setFileName('product list from database')
     }
   }, [userData])
+
+  useEffect(()=> {
+    if(productList?.length > 0) setFileName('product list from database');
+  }, [productList])
 
   const theme = useSelector((state: any) => state.theme)
 

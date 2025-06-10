@@ -15,9 +15,7 @@ const GoogleAuth = () => {
 
   const signInGoogle = () => signInWithPopup(auth, provider)
     .then((result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      console.log(token);
+      // const credential = GoogleAuthProvider.credentialFromResult(result);
       // The signed-in user info.
       const userLogged = result.user;
       
@@ -30,9 +28,6 @@ const GoogleAuth = () => {
         photoUrl: userLogged.photoURL,
         logged: true
       }));
-      localStorage.setItem('accessToken',userLogged.accessToken);
-      // IdP data available using getAdditionalUserInfo(result)
-      // ...
     }).catch((error) => {
       if(error){
         // Handle Errors here.
@@ -45,7 +40,6 @@ const GoogleAuth = () => {
 
     useEffect(() => {
       const unsubscribe = auth.onAuthStateChanged((user) => {
-        console.log(user)
         if (user) {
           dispatch(setUserData({
             id: user.uid,

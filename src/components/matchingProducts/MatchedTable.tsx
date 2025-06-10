@@ -99,7 +99,7 @@ export default function MatchedTable({
             rows={rows}
             columns={columns}
             initialState={{ pagination: { paginationModel } }}
-            pageSizeOptions={[5, 10, 15, 20, 100]}
+            pageSizeOptions={[5, 20, 50, 100]}
             disableRowSelectionOnClick
             components={{
                 Toolbar: CustomToolbar,

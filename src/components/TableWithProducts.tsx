@@ -18,19 +18,33 @@ const paginationModel = { page: 0, pageSize: 100 };
 export default function DataTable() {
     const {productList} = useAppSelector(state => state.products);
     const rows = productList
-
+    // console.log(rows)
   return (
     <Container maxWidth="xl" sx={{margin: '2rem auto'}}>
-        <Paper sx={{ height: rows.length > 100 ? 650 : 400, width: '100%' }}>
-        <DataGrid
-            rows={rows}
-            columns={columns}
-            initialState={{ pagination: { paginationModel } }}
-            pageSizeOptions={[5, 10]}
-            checkboxSelection
-            sx={{ border: 0 }}
-        />
-        </Paper>
+        {rows ? (
+          <Paper sx={{ height: rows.length > 100 ? 650 : 400, width: '100%' }}>
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{ pagination: { paginationModel } }}
+                pageSizeOptions={[5, 10]}
+                checkboxSelection
+                sx={{ border: 0 }}
+            />
+          </Paper>
+        )
+        : (
+          <Paper sx={{ height: 400, width: '100%' }}>
+           <DataGrid
+                rows={[]}
+                columns={columns}
+                initialState={{ pagination: { paginationModel } }}
+                pageSizeOptions={[5, 10]}
+                checkboxSelection
+                sx={{ border: 0 }}
+            />
+          </Paper>
+        )}
     </Container>
   );
 }

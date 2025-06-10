@@ -76,7 +76,8 @@ import Grid from '@mui/material/Unstable_Grid2';
                 </AccordionSummary>
                 <AccordionDetails>
                 <Typography>
-                    As you login to your Google account, your pricelists are added to database, so you don't have to remade them every time you enter this app.
+                    As you log in to your Google account, your pricelists are saved 
+                    to the database, so you don't have to recreate them every time you use the app.
                 </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -93,9 +94,11 @@ import Grid from '@mui/material/Unstable_Grid2';
                 </AccordionSummary>
                 <AccordionDetails>
                 <Typography>
-                    CSV have to be table with <strong>exact</strong> file fields: Name, SKU, weight (number), width (number), height (number), depth(number).
+                    The CSV file must be a table with the following exact fields:
+                    Id, title, weight (number), width (number), height (number), depth (number).
+                    
                     <br />
-                    You can download example here:
+                    You can download an example here:
                     <br />
                     <a href={url} download>Click to download</a>
                 </Typography>

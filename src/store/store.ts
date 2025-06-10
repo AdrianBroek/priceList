@@ -2,7 +2,6 @@
 import { configureStore, MiddlewareArray  } from '@reduxjs/toolkit';
 
 // reducers
-import counterReducer from './counterSlice';
 import productReducer from './productSlice';
 import priceReducer from './priceSlice';
 import productsWithPriceReducer from './productsWithPriceSlice'
@@ -17,7 +16,6 @@ import sortReducer from './sortReducer';
 
 const store = configureStore({
   reducer: {
-    counter: counterReducer,
     products: productReducer,
     priceList: priceReducer,
     productsWithPrice: productsWithPriceReducer,

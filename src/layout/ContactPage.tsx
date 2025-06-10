@@ -109,7 +109,7 @@ const ContactForm = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
             <Paper elevation={2} sx={{marginBottom: 10, paddingTop: 2}}>
             <h1>Contact form</h1>
-            <p>Saw some errors? Have a questions? Please tell us about it!</p>
+            <p>See any errors? Have a question? Let me know!</p>
             <Grid marginTop={10} container spacing={0}>
                 <Grid 
                 xs={12}

@@ -277,7 +277,6 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           </IconButton>
         </Tooltip>
       )}
-      
     </Toolbar>
   );
 }
@@ -294,10 +293,9 @@ export default function EnhancedTable() {
   const [rows, setRows] = React.useState<Data[]>([]);
   const {openExtensions, extensionList} = useSelector((state: any) => state.extension);
   
-
   React.useMemo(()=> {
     setRowsPerPage(priceTable.length) 
-  },[priceTable, ])
+  },[priceTable])
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -585,7 +583,7 @@ React.useEffect(()=> {
                     </TableCell>
 
                     <TableCell align="right">
-                    {row.area/100}
+                    {row.area}
                     </TableCell>
                     <TableCell 
                     style={edit.active && edit.activeRow == row.id && edit.activeField != "width"? {pointerEvents: "none"} : {pointerEvents: 'all'}} sx={{ position: 'relative' }} id="width" onClick={()=>editInputHandlerClick(row.id, "width")} align="right">

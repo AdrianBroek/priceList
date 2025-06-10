@@ -17,10 +17,9 @@ const GetExtensionsFromDb = () => {
             })
             const json = await response.json();
             // console.log(json)
-            if(json.length > 0 && extensionList.length == 0){
-                dispatch(addExtension(json))
+            if (Array.isArray(json) && json.length > 0 && extensionList.length === 0) {
+                dispatch(addExtension(json));
             }
-
         } catch (error) {
             console.error(error);
         }
