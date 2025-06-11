@@ -131,7 +131,7 @@ const headCells: readonly HeadCell[] = [
       id: 'area',
       numeric: true,
       disablePadding: false,
-      label: 'area cm2',
+      label: 'area cm²',
     },
     {
       id: 'width',
@@ -583,7 +583,7 @@ React.useEffect(()=> {
                     </TableCell>
 
                     <TableCell align="right">
-                    {row.area}
+                    {parseFloat((row.area/100).toFixed(2))}
                     </TableCell>
                     <TableCell 
                     style={edit.active && edit.activeRow == row.id && edit.activeField != "width"? {pointerEvents: "none"} : {pointerEvents: 'all'}} sx={{ position: 'relative' }} id="width" onClick={()=>editInputHandlerClick(row.id, "width")} align="right">

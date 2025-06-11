@@ -260,13 +260,12 @@ const ContactForm = () => {
                 alignItems="center"
                 p={2}>
                     <Item elevation={0}>
-                    
                         <TextField sx={{width: "100%"}} placeholder='title'
                         id="outlined-multiline-static" label="Title"
                         type="text" {...register("title", {
                             required: "Please provide title of your message",
                             pattern: {
-                                value: /^[A-Z0-9][0-9A-Za-zżóźćęłą\s]+$/,
+                                value: /^[A-Z0-9][0-9A-Za-zżóźćęłą\s\-_.\/()+&]+$/,
                                 message: "Your title has to start with great letter and contains only letters and numbers."
                             },
                             minLength: {
